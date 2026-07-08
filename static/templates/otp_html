@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your OTP Code</title>
+</head>
+
+<body>
+    <p>Hello,</p>
+    <p>Welcome to the Our service! Your One-Time Password (OTP) is:</p>
+    <h2>{{otp}}</h2>
+    <p>Please use this code to complete your verification. This code is valid for a limited time.</p>
+    <p>If you did not request this code, please ignore this email.</p>
+    <p>Thanks,</p>
+    <p>The Webanix Team</p>
+</body>
+
+</html>

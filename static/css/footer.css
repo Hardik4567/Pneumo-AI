@@ -1,0 +1,30 @@
+/* ============================================================
+   PneumoAI — Footer
+   footer.css
+   ============================================================ */
+
+.pai-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-top: 0.5px solid rgba(120,160,255,0.12);
+  background: rgba(10,15,30,0.6);
+  backdrop-filter: blur(8px);
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.pai-footer-left { display: flex; align-items: center; gap: 10px; }
+.pai-footer-logo    { font-size: 13px; font-weight: 600; color: rgba(200,215,255,0.5); }
+.pai-footer-version { font-size: 11px; color: rgba(200,215,255,0.3); }
+.pai-footer-center  { flex: 1; text-align: center; }
+.pai-footer-disclaimer { font-size: 10px; color: rgba(200,215,255,0.3); letter-spacing: 0.3px; }
+.pai-footer-right { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(200,215,255,0.3); }
+.pai-footer-dot { opacity: 0.4; }
+
+@media (max-width: 768px) {
+  .pai-footer { flex-direction: column; text-align: center; gap: 8px; padding: 16px; }
+  .pai-footer-center { display: none; }
+}

@@ -1,0 +1,194 @@
+/* ============================================================
+   PneumoAI — Base Reset & Global Styles
+   base.css
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #0a0f1e !important;
+  color: #e8eaf0;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Animated Background Orbs ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(30, 80, 180, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(15, 120, 100, 0.12) 0%, transparent 70%),
+    #0a0f1e;
+  pointer-events: none;
+}
+
+/* ── Grid Overlay ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(120, 180, 255, 0.7) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 180, 255, 0.7) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* ── Page Wrapper ── */
+.pai-page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.pai-main-content {
+  flex: 1;
+}
+
+/* ── Typography Utilities ── */
+.pai-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #e8eaf0;
+}
+
+.pai-grad-text {
+  background: linear-gradient(90deg, #7eb8ff, #4fe8c0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pai-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #4fe8c0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pai-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 0.5px;
+  background: #4fe8c0;
+  flex-shrink: 0;
+}
+
+.pai-section-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(200, 215, 255, 0.35);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.pai-divider {
+  border: none;
+  border-top: 0.5px solid rgba(120, 160, 255, 0.12);
+  margin: 0;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(126, 184, 255, 0.2);
+  border-radius: 999px;
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 1.5px solid #7eb8ff;
+  outline-offset: 2px;
+}
+
+/* ── Animations ── */
+@keyframes pai-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+@keyframes pai-scan {
+  0%   { top: 5%;  opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 92%; opacity: 0; }
+}
+
+@keyframes pai-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pai-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pai-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pai-breathe {
+  0%, 100% { transform: scale(1);     opacity: 1; }
+  50%       { transform: scale(1.06); opacity: 0.85; }
+}
+
+.pai-animate-fade-up { animation: pai-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+.pai-animate-fade-in { animation: pai-fade-in 0.4s ease both; }
+
+.pai-enter-1 { animation: pai-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+.pai-enter-2 { animation: pai-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+.pai-enter-3 { animation: pai-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+.pai-enter-4 { animation: pai-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
+.pai-enter-5 { animation: pai-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.45s both; }
+
+.pai-enter-left  { animation: pai-slide-left  0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
+.pai-enter-right { animation: pai-slide-right 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
+
+@keyframes pai-slide-left {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pai-slide-right {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

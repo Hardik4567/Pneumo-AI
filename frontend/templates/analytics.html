@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics | PneumoAI{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ===========================
+     PAGE HEADER
+=========================== -->
+
+<section class="analytics-header fade-up">
+
+    <div>
+
+        <h1>AI Analytics & Reports</h1>
+
+        <p>
+            Prediction trends, AI performance and patient reports.
+        </p>
+
+    </div>
+
+    <a href="/upload" class="btn btn-primary">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        Upload Scan
+    </a>
+
+</section>
+
+<!-- ===========================
+     SUMMARY CARDS
+=========================== -->
+
+<section class="analytics-stats">
+
+    <div class="stat-card">
+        <span>Total Scans</span>
+        <h2 id="totalScans">0</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Healthy</span>
+        <h2 id="healthyCases">0</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Pneumonia</span>
+        <h2 id="pneumoniaCases">0</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Average Confidence</span>
+        <h2 id="avgConfidence">0%</h2>
+    </div>
+
+</section>
+
+<!-- ===========================
+     CHARTS
+=========================== -->
+
+<section class="charts-grid">
+
+    <div class="glass-card">
+
+        <div class="card-title">
+            Prediction Trend
+        </div>
+
+        <div id="trendChart">
+
+            <!-- Your SVG chart goes here -->
+
+        </div>
+
+    </div>
+
+    <div class="glass-card">
+
+        <div class="card-title">
+            Disease Distribution
+        </div>
+
+        <div id="distributionChart">
+
+            <!-- Ring chart -->
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     AI PERFORMANCE
+=========================== -->
+
+<section class="performance-grid">
+
+    <div class="glass-card">
+        <span>Model Accuracy</span>
+        <h3>98.7%</h3>
+    </div>
+
+    <div class="glass-card">
+        <span>Average Response</span>
+        <h3>0.42 sec</h3>
+    </div>
+
+    <div class="glass-card">
+        <span>System Status</span>
+        <h3 class="online">Online</h3>
+    </div>
+
+</section>
+
+<!-- ===========================
+     REPORTS TABLE
+=========================== -->
+
+<section class="glass-card">
+
+    <div class="table-header">
+
+        <h2>Prediction Reports</h2>
+
+        <input
+            id="searchReport"
+            type="text"
+            placeholder="Search patient..."
+        >
+
+    </div>
+
+    <table class="report-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Patient</th>
+                <th>Disease</th>
+                <th>Confidence</th>
+                <th>Date</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="reportTable">
+
+        </tbody>
+
+    </table>
+
+</section>
+
+{% endblock %}
+
+{% block page_js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+{% endblock %}

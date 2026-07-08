@@ -1,0 +1,325 @@
+{# 
+  PneumoAI - Tech Stack Component
+  File: components/techstack.html
+  Template Engine: Jinja2 / Flask
+  Description: Production-ready tech stack grid and architectural flow diagram for PneumoAI.
+  Dependencies: Requires Font Awesome 6+ and techstack.css for appropriate responsive layouts and glassmorphism styling.
+#}
+
+<section class="techstack" id="techstack" aria-labelledby="techstack-title">
+  <div class="techstack__container">
+    
+    <header class="techstack__header">
+      <span class="techstack__badge">Technology Stack</span>
+      <h2 id="techstack-title" class="techstack__title">
+        Built with Modern AI &amp; Web Technologies
+      </h2>
+      <p class="techstack__subtitle">
+        PneumoAI combines cutting-edge deep learning frameworks with production-grade backend architectures to deliver a scalable, robust, and highly accurate medical imaging ecosystem.
+      </p>
+    </header>
+
+    <div class="techstack__grid" role="region" aria-label="Technology Categorization">
+      
+      <article class="tech-card">
+        <div class="tech-card__background-decorator" aria-hidden="true"></div>
+        <div class="tech-card__icon-container">
+          <i class="fa-solid fa-brain tech-card__icon" aria-hidden="true"></i>
+        </div>
+        <h3 class="tech-card__title">Artificial Intelligence</h3>
+        <p class="tech-card__description">
+          Core deep learning stack processing pixel tensor structures and rendering visual feature explainability.
+        </p>
+        <ul class="tech-card__badges" aria-label="AI Tools and Frameworks">
+          <li class="tech-badge">
+            <i class="fa-solid fa-gears tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">TensorFlow</span>
+            <span class="tech-badge__status">AI</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-layer-group tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Keras</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-network-wired tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">DenseNet121</span>
+            <span class="tech-badge__status">Model</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-eye tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Grad-CAM</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-calculator tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">NumPy</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-camera tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">OpenCV</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="tech-card">
+        <div class="tech-card__background-decorator" aria-hidden="true"></div>
+        <div class="tech-card__icon-container">
+          <i class="fa-solid fa-server tech-card__icon" aria-hidden="true"></i>
+        </div>
+        <h3 class="tech-card__title">Backend Engineering</h3>
+        <p class="tech-card__description">
+          Robust server routing, API orchestration, and Python-native template engines handling requests.
+        </p>
+        <ul class="tech-card__badges" aria-label="Backend Architecture Components">
+          <li class="tech-badge">
+            <i class="fa-brands fa-python tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Python</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-pepper-hot tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Flask</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-cloud-arrow-up tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">REST API</span>
+            <span class="tech-badge__status">Backend</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-code tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Jinja2</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-triangle-exclamation tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Gunicorn</span>
+            <span class="tech-badge__status">Prod</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="tech-card">
+        <div class="tech-card__background-decorator" aria-hidden="true"></div>
+        <div class="tech-card__icon-container">
+          <i class="fa-solid fa-desktop tech-card__icon" aria-hidden="true"></i>
+        </div>
+        <h3 class="tech-card__title">Frontend Interface</h3>
+        <p class="tech-card__description">
+          Responsive user interface components designed for swift user uploads and clean layouts.
+        </p>
+        <ul class="tech-card__badges" aria-label="Frontend Interface Tools">
+          <li class="tech-badge">
+            <i class="fa-brands fa-html5 tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">HTML5</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-css3-alt tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">CSS3</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-js tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">JS (ES6)</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-bootstrap tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Bootstrap 5</span>
+            <span class="tech-badge__status">UI</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-font-awesome tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Font Awesome</span>
+            <span class="tech-badge__status">UI</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="tech-card">
+        <div class="tech-card__background-decorator" aria-hidden="true"></div>
+        <div class="tech-card__icon-container">
+          <i class="fa-solid fa-chart-pie tech-card__icon" aria-hidden="true"></i>
+        </div>
+        <h3 class="tech-card__title">Data Science</h3>
+        <p class="tech-card__description">
+          Statistical analytical utilities evaluating historical validation splits and plotting model metrics.
+        </p>
+        <ul class="tech-card__badges" aria-label="Data Science Frameworks">
+          <li class="tech-badge">
+            <i class="fa-solid fa-table tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Pandas</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-chart-line tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Matplotlib</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-microchip tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Scikit-Learn</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="tech-card">
+        <div class="tech-card__background-decorator" aria-hidden="true"></div>
+        <div class="tech-card__icon-container">
+          <i class="fa-solid fa-screwdriver-wrench tech-card__icon" aria-hidden="true"></i>
+        </div>
+        <h3 class="tech-card__title">Development Tools</h3>
+        <p class="tech-card__description">
+          Local engineering toolsets maintaining version stability and validating interface payloads.
+        </p>
+        <ul class="tech-card__badges" aria-label="Development Software">
+          <li class="tech-badge">
+            <i class="fa-solid fa-code tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">VS Code</span>
+            <span class="tech-badge__status">Dev</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-git-alt tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Git</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-github tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">GitHub</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-paper-plane tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Postman</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-docker tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Docker</span>
+            <span class="tech-badge__status">Prod</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="tech-card">
+        <div class="tech-card__background-decorator" aria-hidden="true"></div>
+        <div class="tech-card__icon-container">
+          <i class="fa-solid fa-cloud-arrow-up tech-card__icon" aria-hidden="true"></i>
+        </div>
+        <h3 class="tech-card__title">Deployment</h3>
+        <p class="tech-card__description">
+          Cloud delivery infrastructures hosting container distributions with transport security.
+        </p>
+        <ul class="tech-card__badges" aria-label="Cloud and Deployment Platform Systems">
+          <li class="tech-badge">
+            <i class="fa-solid fa-cubes tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Render</span>
+            <span class="tech-badge__status">Prod</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-subway tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Railway</span>
+            <span class="tech-badge__status">Prod</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-network-wired tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Nginx</span>
+            <span class="tech-badge__status">Used</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-brands fa-linux tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">Linux</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+          <li class="tech-badge">
+            <i class="fa-solid fa-lock tech-badge__icon" aria-hidden="true"></i>
+            <span class="tech-badge__label">HTTPS</span>
+            <span class="tech-badge__status">Core</span>
+          </li>
+        </ul>
+      </article>
+
+    </div>
+
+    <div class="architecture">
+      <h3 id="architecture-title" class="architecture__title">Project Architecture Workflow</h3>
+      
+      <ol class="architecture__flow" aria-label="Sequential Application Process">
+        
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-user architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">User Ingestion</span>
+          <div class="architecture__arrow" aria-hidden="true">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </li>
+
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-window-maximize architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">Frontend Interface <small>(HTML • CSS • JS)</small></span>
+          <div class="architecture__arrow" aria-hidden="true">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </li>
+
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-pepper-hot architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">Flask Backend Server</span>
+          <div class="architecture__arrow" aria-hidden="true">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </li>
+
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-brain architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">DenseNet121 AI Model</span>
+          <div class="architecture__arrow" aria-hidden="true">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </li>
+
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-square-poll-vertical architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">Prediction Engine API</span>
+          <div class="architecture__arrow" aria-hidden="true">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </li>
+
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-eye architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">Grad-CAM Localization</span>
+          <div class="architecture__arrow" aria-hidden="true">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </li>
+
+        <li class="architecture__step">
+          <div class="architecture__icon-wrapper">
+            <i class="fa-solid fa-file-pdf architecture__icon" aria-hidden="true"></i>
+          </div>
+          <span class="architecture__label">Clinical Medical Report</span>
+        </li>
+
+      </ol>
+    </div>
+
+  </div>
+</section>

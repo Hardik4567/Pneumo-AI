@@ -1,0 +1,61 @@
+/* ============================================================
+   PneumoAI — Design Tokens
+   variables.css
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+:root {
+  --pai-navy:         #0a0f1e;
+  --pai-navy-mid:     #0e1528;
+  --pai-navy-light:   #141c32;
+
+  --pai-teal:         #4fe8c0;
+  --pai-teal-dim:     rgba(79,232,192,0.12);
+  --pai-teal-border:  rgba(79,232,192,0.25);
+
+  --pai-blue:         #7eb8ff;
+  --pai-blue-dim:     rgba(126,184,255,0.10);
+  --pai-blue-border:  rgba(126,184,255,0.25);
+
+  --pai-amber:        #f0a060;
+  --pai-amber-dim:    rgba(240,160,96,0.12);
+  --pai-amber-border: rgba(240,160,96,0.25);
+
+  --pai-red:          #f06060;
+  --pai-red-dim:      rgba(240,96,96,0.10);
+
+  --pai-text-primary:   #e8eaf0;
+  --pai-text-secondary: rgba(200,215,255,0.55);
+  --pai-text-muted:     rgba(200,215,255,0.30);
+
+  --pai-border:         rgba(120,160,255,0.12);
+  --pai-border-hover:   rgba(126,184,255,0.35);
+  --pai-border-strong:  rgba(126,184,255,0.50);
+
+  --pai-surface:        rgba(255,255,255,0.04);
+  --pai-surface-hover:  rgba(255,255,255,0.07);
+  --pai-surface-accent: rgba(30,80,180,0.08);
+
+  --pai-grad-brand: linear-gradient(135deg, #1e50b4, #0d9e78);
+  --pai-grad-text:  linear-gradient(90deg, #7eb8ff, #4fe8c0);
+  --pai-grad-bar:   linear-gradient(90deg, #1e50b4, #4fe8c0);
+  --pai-grad-warn:  linear-gradient(90deg, #b44020, #f0a060);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  --pad-page:    28px;
+  --pad-card:    18px;
+  --pad-section: 24px;
+
+  --r-sm:   8px;
+  --r-md:   10px;
+  --r-lg:   14px;
+  --r-xl:   20px;
+  --r-pill: 999px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.18s;
+  --dur-base: 0.28s;
+}

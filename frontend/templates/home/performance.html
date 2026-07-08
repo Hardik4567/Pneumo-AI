@@ -1,0 +1,195 @@
+{# 
+  PneumoAI - Performance Metrics Component
+  File: components/performance.html
+  Template Engine: Jinja2 / Flask
+  Description: Production-grade, highly accessible, and semantic performance tracking section using BEM methodology.
+  Dependencies: Requires Font Awesome 6+ for icons and performance.css for layout and styling.
+#}
+
+<section class="performance" id="performance" aria-labelledby="performance-title">
+  <div class="performance__container">
+    
+    <header class="performance__header">
+      <span class="performance__badge">AI Performance</span>
+      <h2 id="performance-title" class="performance__title">
+        Rigorously Validated Clinical Benchmarks
+      </h2>
+      <p class="performance__subtitle">
+        PneumoAI leverages deep convolutional networks optimized for medical imaging. Our model is continuously benchmarked against standard clinical validation datasets to guarantee maximum reliability.
+      </p>
+    </header>
+
+    <div class="performance__content">
+      
+      <div class="performance__metrics" role="region" aria-label="Key Performance Indicators">
+        
+        <article class="performance-card">
+          <div class="performance-card__background-decorator" aria-hidden="true"></div>
+          <div class="performance-card__icon-container">
+            <i class="fa-solid fa-bullseye performance-card__icon" aria-hidden="true"></i>
+          </div>
+          <div class="performance-card__value">95.4%</div>
+          <h3 class="performance-card__title">Accuracy</h3>
+          <p class="performance-card__text">Overall ratio of correctly predicted clinical instances across both normal and pneumonia cases.</p>
+        </article>
+
+        <article class="performance-card">
+          <div class="performance-card__background-decorator" aria-hidden="true"></div>
+          <div class="performance-card__icon-container">
+            <i class="fa-solid fa-crosshairs performance-card__icon" aria-hidden="true"></i>
+          </div>
+          <div class="performance-card__value">94.8%</div>
+          <h3 class="performance-card__title">Precision</h3>
+          <p class="performance-card__text">The ability of the classifier not to label a normal lung scan as pneumonia, minimizing false alarms.</p>
+        </article>
+
+        <article class="performance-card">
+          <div class="performance-card__background-decorator" aria-hidden="true"></div>
+          <div class="performance-card__icon-container">
+            <i class="fa-solid fa-heartbeat performance-card__icon" aria-hidden="true"></i>
+          </div>
+          <div class="performance-card__value">95.9%</div>
+          <h3 class="performance-card__title">Recall (Sensitivity)</h3>
+          <p class="performance-card__text">The model's ability to find all positive pneumonia cases, preventing critical false negatives.</p>
+        </article>
+
+        <article class="performance-card">
+          <div class="performance-card__background-decorator" aria-hidden="true"></div>
+          <div class="performance-card__icon-container">
+            <i class="fa-solid fa-chart-line performance-card__icon" aria-hidden="true"></i>
+          </div>
+          <div class="performance-card__value">95.3%</div>
+          <h3 class="performance-card__title">F1 Score</h3>
+          <p class="performance-card__text">The harmonic mean of precision and recall, representing balanced classification performance.</p>
+        </article>
+
+        <article class="performance-card">
+          <div class="performance-card__background-decorator" aria-hidden="true"></div>
+          <div class="performance-card__icon-container">
+            <i class="fa-solid fa-bolt performance-card__icon" aria-hidden="true"></i>
+          </div>
+          <div class="performance-card__value">&lt; 2 Seconds</div>
+          <h3 class="performance-card__title">Inference Time</h3>
+          <p class="performance-card__text">The processing speed elapsed from initial chest X-ray ingestion to complete diagnostic output.</p>
+        </article>
+
+        <article class="performance-card">
+          <div class="performance-card__background-decorator" aria-hidden="true"></div>
+          <div class="performance-card__icon-container">
+            <i class="fa-solid fa-database performance-card__icon" aria-hidden="true"></i>
+          </div>
+          <div class="performance-card__value">25,000+</div>
+          <h3 class="performance-card__title">Images Trained</h3>
+          <p class="performance-card__text">A diverse training catalog of expertly annotated posterior-anterior chest X-ray views.</p>
+        </article>
+
+      </div>
+
+      <aside class="performance-panel" aria-labelledby="panel-heading">
+        <div class="performance-panel__header">
+          <h3 id="panel-heading" class="performance-panel__title">DenseNet121 Performance</h3>
+          <p class="performance-panel__description">
+            Our deep learning pipeline uses a DenseNet121 framework. This architecture connects each layer to every other layer in a feed-forward fashion, preserving feature maps and enabling highly detailed pattern detection in pulmonary medical scans.
+          </p>
+        </div>
+
+        <div class="performance-progress" role="region" aria-label="Visual statistical analysis">
+          
+          <div class="performance-progress__item">
+            <div class="performance-progress__meta">
+              <span id="label-accuracy" class="performance-progress__label">Accuracy</span>
+              <span class="performance-progress__value">95.4%</span>
+            </div>
+            <div class="performance-progress__bar">
+              <div class="performance-progress__fill" 
+                   role="progressbar" 
+                   aria-valuenow="95.4" 
+                   aria-valuemin="0" 
+                   aria-valuemax="100" 
+                   aria-labelledby="label-accuracy"
+                   style="width: 95.4%;">
+              </div>
+            </div>
+          </div>
+
+          <div class="performance-progress__item">
+            <div class="performance-progress__meta">
+              <span id="label-precision" class="performance-progress__label">Precision</span>
+              <span class="performance-progress__value">94.8%</span>
+            </div>
+            <div class="performance-progress__bar">
+              <div class="performance-progress__fill" 
+                   role="progressbar" 
+                   aria-valuenow="94.8" 
+                   aria-valuemin="0" 
+                   aria-valuemax="100" 
+                   aria-labelledby="label-precision"
+                   style="width: 94.8%;">
+              </div>
+            </div>
+          </div>
+
+          <div class="performance-progress__item">
+            <div class="performance-progress__meta">
+              <span id="label-recall" class="performance-progress__label">Recall</span>
+              <span class="performance-progress__value">95.9%</span>
+            </div>
+            <div class="performance-progress__bar">
+              <div class="performance-progress__fill" 
+                   role="progressbar" 
+                   aria-valuenow="95.9" 
+                   aria-valuemin="0" 
+                   aria-valuemax="100" 
+                   aria-labelledby="label-recall"
+                   style="width: 95.9%;">
+              </div>
+            </div>
+          </div>
+
+          <div class="performance-progress__item">
+            <div class="performance-progress__meta">
+              <span id="label-f1" class="performance-progress__label">F1 Score</span>
+              <span class="performance-progress__value">95.3%</span>
+            </div>
+            <div class="performance-progress__bar">
+              <div class="performance-progress__fill" 
+                   role="progressbar" 
+                   aria-valuenow="95.3" 
+                   aria-valuemin="0" 
+                   aria-valuemax="100" 
+                   aria-labelledby="label-f1"
+                   style="width: 95.3%;">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="performance-info" aria-label="Model specifications">
+          
+          <div class="performance-info__item">
+            <span class="performance-info__label">Model Architecture</span>
+            <span class="performance-info__value">DenseNet121</span>
+          </div>
+
+          <div class="performance-info__item">
+            <span class="performance-info__label">Input Resolution</span>
+            <span class="performance-info__value">224 &times; 224</span>
+          </div>
+
+          <div class="performance-info__item">
+            <span class="performance-info__label">Framework</span>
+            <span class="performance-info__value">TensorFlow</span>
+          </div>
+
+          <div class="performance-info__item">
+            <span class="performance-info__label">Explainability</span>
+            <span class="performance-info__value">Grad-CAM</span>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>

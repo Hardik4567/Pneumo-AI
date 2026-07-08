@@ -1,0 +1,215 @@
+{# 
+  PneumoAI - Workflow & Ingestion Pipeline Component
+  File: components/workflow.html
+  Template Engine: Jinja2 / Flask
+  Description: Production-ready, highly accessible representation of the 7-step AI diagnostic pipeline, clinical metrics, and contextual CTA.
+  Dependencies: Requires Font Awesome 6+ and workflow.css for layout handling and timeline connectors.
+#}
+
+<section class="workflow" id="workflow" aria-labelledby="workflow-main-title">
+  <div class="workflow__container">
+    
+    <header class="workflow__header">
+      <span class="workflow__badge">AI Workflow</span>
+      <h2 id="workflow-main-title" class="workflow__title">How PneumoAI Works</h2>
+      <p class="workflow__subtitle">
+        Our automated pipeline processes chest X-rays through rigorous verification, optimization, and deep learning layers to supply clinical staff with swift, explainable diagnostics.
+      </p>
+    </header>
+
+    <div class="workflow__timeline" role="region" aria-label="7-Step Clinical Pipeline Timeline">
+      
+      <article class="workflow-step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">01</span>
+          <span class="workflow-step__badge">Input</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-cloud-arrow-up workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">Upload Chest X-ray</h3>
+          <p class="workflow-step__description">
+            Upload a standard digital PNG or JPEG posterior-anterior chest X-ray securely utilizing the drag-and-drop web dashboard.
+          </p>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">02</span>
+          <span class="workflow-step__badge">Validation</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-shield-cat workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">Image Validation</h3>
+          <p class="workflow-step__description">
+            The gateway system validates image integrity, file configurations, minimum spatial resolution, and compliance parameters.
+          </p>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">03</span>
+          <span class="workflow-step__badge">Preparation</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-sliders workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">Preprocessing</h3>
+          <p class="workflow-step__description">
+            Normalizes matrices, adjusts contrast variables, and resizes pixel tensors to conform to fixed neural network inputs.
+          </p>
+        </div>
+      </article>
+
+      <article class="workflow-step workflow-step--active" aria-current="step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">04</span>
+          <span class="workflow-step__badge">Inference</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-brain workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">AI Prediction</h3>
+          <p class="workflow-step__description">
+            DenseNet121 evaluates structural densities to classify conditions and output target probability confidence vectors.
+          </p>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">05</span>
+          <span class="workflow-step__badge">Explainability</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-eye workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">Grad-CAM Explainability</h3>
+          <p class="workflow-step__description">
+            Generates attention heatmaps by extracting gradients from final feature maps, projecting opacity shifts over opacity targets.
+          </p>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">06</span>
+          <span class="workflow-step__badge">Analysis</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-stethoscope workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">Medical Analysis</h3>
+          <p class="workflow-step__description">
+            Aggregates diagnostic insights into structural evaluation metrics ready for clinical review and decision optimization.
+          </p>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step__background-decorator" aria-hidden="true"></div>
+        <div class="workflow-step__connector" aria-hidden="true"></div>
+        
+        <div class="workflow-step__meta">
+          <span class="workflow-step__number">07</span>
+          <span class="workflow-step__badge">Output</span>
+        </div>
+
+        <div class="workflow-step__icon-container">
+          <i class="fa-solid fa-file-medical workflow-step__icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="workflow-step__content">
+          <h3 class="workflow-step__title">Download Report</h3>
+          <p class="workflow-step__description">
+            Generates complete metadata reports, localization overlays, and provides accessible, downloadable PDF clinical logs.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="workflow-stats" role="region" aria-label="Workflow Statistical Validation Summary">
+      
+      <div class="workflow-stat">
+        <div class="workflow-stat__number">95.4%</div>
+        <div class="workflow-stat__label">Model Accuracy</div>
+      </div>
+
+      <div class="workflow-stat">
+        <div class="workflow-stat__number">&lt; 2 sec</div>
+        <div class="workflow-stat__label">Average Prediction Time</div>
+      </div>
+
+      <div class="workflow-stat">
+        <div class="workflow-stat__number">25K+</div>
+        <div class="workflow-stat__label">Training Images</div>
+      </div>
+
+      <div class="workflow-stat">
+        <div class="workflow-stat__number">Grad-CAM</div>
+        <div class="workflow-stat__label">Explainable AI Framework</div>
+      </div>
+
+    </div>
+
+    <div class="workflow-cta">
+      <div class="workflow-cta__background-decorator" aria-hidden="true"></div>
+      
+      <h3 class="workflow-cta__title">Ready to Analyze Your Chest X-ray?</h3>
+      <p class="workflow-cta__description">
+        Access our specialized deployment engine. Streamline image orchestration, review localization diagnostics, and export structured clinical records instantly.
+      </p>
+      
+      <div class="workflow-cta__buttons">
+        <a href="{{ url_dashboard if url_dashboard else '#' }}" class="workflow-cta__primary">
+          <span>Analyze Now</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+        <a href="{{ url_documentation if url_documentation else '#' }}" class="workflow-cta__secondary">
+          <span>Learn More</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>

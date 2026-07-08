@@ -1,0 +1,129 @@
+/* ============================================================
+   PneumoAI — Header & Navigation
+   header.css
+   ============================================================ */
+
+.pai-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  border-bottom: 0.5px solid rgba(120,160,255,0.15);
+  background: rgba(10,15,30,0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  gap: 20px;
+}
+
+/* ── Logo ── */
+.pai-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.pai-logo-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1e50b4, #0d9e78);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.pai-logo-wordmark { display: flex; flex-direction: column; line-height: 1; }
+
+.pai-logo-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px; font-weight: 700;
+  background: linear-gradient(90deg, #7eb8ff, #4fe8c0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pai-logo-tagline {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(200,215,255,0.35);
+  margin-top: 2px;
+}
+
+/* ── Nav ── */
+.pai-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+}
+
+.pai-nav-link {
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 0.5px solid transparent;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: rgba(200,215,255,0.5);
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  transition: color 0.18s, background 0.18s, border-color 0.18s;
+  white-space: nowrap;
+}
+
+.pai-nav-link:hover { color: #e8eaf0; background: rgba(255,255,255,0.05); }
+
+.pai-nav-link.active {
+  color: #7eb8ff;
+  background: rgba(126,184,255,0.10);
+  border-color: rgba(126,184,255,0.25);
+}
+
+/* ── Right ── */
+.pai-header-right {
+  display: flex; align-items: center; gap: 16px; flex-shrink: 0;
+}
+
+.pai-status { display: flex; align-items: center; gap: 7px; }
+
+.pai-status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4fe8c0;
+  box-shadow: 0 0 8px #4fe8c0;
+  animation: pai-pulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.pai-status-label {
+  font-size: 11px;
+  color: #4fe8c0;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.pai-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e50b4, #0d9e78);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: #fff;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: border-color 0.18s;
+}
+
+.pai-avatar:hover { border-color: rgba(126,184,255,0.35); }
+
+@media (max-width: 768px) {
+  .pai-nav { display: none; }
+  .pai-header { padding: 12px 18px; }
+  .pai-status-label { display: none; }
+}

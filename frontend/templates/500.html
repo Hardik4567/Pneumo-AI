@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}500 — Server Error | PneumoAI{% endblock %}
+{% block content %}
+<style>
+  .error-page{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 120px)}
+  .error-inner{text-align:center;max-width:480px}
+  .error-code{font-size:120px;font-weight:700;line-height:1;background:linear-gradient(135deg,#ff4757,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;animation:fade-up 0.6s ease both}
+  .error-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;animation:fade-up 0.6s ease 0.2s both}
+  .error-desc{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:28px;animation:fade-up 0.6s ease 0.3s both}
+  .error-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fade-up 0.6s ease 0.4s both}
+</style>
+<div class="error-page">
+  <div class="error-inner">
+    <div class="error-code">500</div>
+    <div style="font-size:48px;margin-bottom:16px;animation:fade-up 0.6s ease 0.1s both">⚠️</div>
+    <div class="error-title">Internal Server Error</div>
+    <div class="error-desc">Something went wrong on our end. The AI engine may be temporarily unavailable. Please try again in a moment.</div>
+    <div class="error-actions">
+      <a href="/"       class="btn btn-primary"><i class="fas fa-house"></i> Go Home</a>
+      <button onclick="window.location.reload()" class="btn btn-ghost"><i class="fas fa-rotate-right"></i> Retry</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

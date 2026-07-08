@@ -1,0 +1,152 @@
+{# 
+  PneumoAI - Features Component
+  File: components/features.html
+  Template Engine: Jinja2 / Flask
+  Description: Production-ready, accessible, and semantic features section with a BEM-inspired naming convention.
+  Dependencies: Requires Font Awesome 6+ for icons and features.css for styling.
+#}
+
+<section class="features" id="features" aria-labelledby="features-title">
+  <div class="features__container">
+    
+    <header class="features__header">
+      <span class="features__badge">Why Choose PneumoAI</span>
+      <h2 id="features-title" class="features__title">
+        Advanced AI Assistance for Pneumonia Detection
+      </h2>
+      <p class="features__subtitle">
+        Empowering healthcare professionals with state-of-the-art deep learning models to deliver fast, accurate, and explainable chest X-ray analysis.
+      </p>
+    </header>
+
+    <div class="features__grid">
+      
+      <article class="feature-card">
+        <div class="feature-card__background-decorator" aria-hidden="true"></div>
+        
+        <div class="feature-card__icon-container">
+          <i class="fa-solid fa-brain feature-card__icon" aria-hidden="true"></i>
+        </div>
+        
+        <h3 class="feature-card__title">AI-Powered Detection</h3>
+        
+        <p class="feature-card__description">
+          Utilizes a highly optimized DenseNet121 deep learning architecture trained on extensive clinical datasets to identify radiological patterns of pneumonia.
+        </p>
+        
+        <footer class="feature-card__footer">
+          <a href="{{ url_get_started if url_get_started else '#' }}" class="feature-card__link" aria-label="Learn more about AI-Powered Detection">
+            <span class="feature-card__link-text">Learn More</span>
+            <i class="fa-solid fa-arrow-right feature-card__arrow" aria-hidden="true"></i>
+          </a>
+        </footer>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__background-decorator" aria-hidden="true"></div>
+        
+        <div class="feature-card__icon-container">
+          <i class="fa-solid fa-bullseye feature-card__icon" aria-hidden="true"></i>
+        </div>
+        
+        <h3 class="feature-card__title">High Accuracy</h3>
+        
+        <p class="feature-card__description">
+          Delivers reliable diagnostic support with a proven benchmark accuracy of 95%+, minimizing false negatives and enhancing clinical decision-making safety.
+        </p>
+        
+        <footer class="feature-card__footer">
+          <a href="{{ url_accuracy if url_accuracy else '#' }}" class="feature-card__link" aria-label="Learn more about our model accuracy">
+            <span class="feature-card__link-text">Learn More</span>
+            <i class="fa-solid fa-arrow-right feature-card__arrow" aria-hidden="true"></i>
+          </a>
+        </footer>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__background-decorator" aria-hidden="true"></div>
+        
+        <div class="feature-card__icon-container">
+          <i class="fa-solid fa-bolt feature-card__icon" aria-hidden="true"></i>
+        </div>
+        
+        <h3 class="feature-card__title">Fast Analysis</h3>
+        
+        <p class="feature-card__description">
+          Accelerates triage workflows with inference results generated in under 2 seconds, allowing critical cases to be flagged and prioritized immediately.
+        </p>
+        
+        <footer class="feature-card__footer">
+          <a href="{{ url_performance if url_performance else '#' }}" class="feature-card__link" aria-label="Learn more about our fast processing speeds">
+            <span class="feature-card__link-text">Learn More</span>
+            <i class="fa-solid fa-arrow-right feature-card__arrow" aria-hidden="true"></i>
+          </a>
+        </footer>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__background-decorator" aria-hidden="true"></div>
+        
+        <div class="feature-card__icon-container">
+          <i class="fa-solid fa-eye feature-card__icon" aria-hidden="true"></i>
+        </div>
+        
+        <h3 class="feature-card__title">Grad-CAM Explainability</h3>
+        
+        <p class="feature-card__description">
+          Promotes clinical trust by rendering visual heatmaps. The AI explicitly highlights the localized lung regions that influenced the diagnostic prediction.
+        </p>
+        
+        <footer class="feature-card__footer">
+          <a href="{{ url_explainability if url_explainability else '#' }}" class="feature-card__link" aria-label="Learn more about Grad-CAM explainability">
+            <span class="feature-card__link-text">Learn More</span>
+            <i class="fa-solid fa-arrow-right feature-card__arrow" aria-hidden="true"></i>
+          </a>
+        </footer>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__background-decorator" aria-hidden="true"></div>
+        
+        <div class="feature-card__icon-container">
+          <i class="fa-solid fa-shield-halved feature-card__icon" aria-hidden="true"></i>
+        </div>
+        
+        <h3 class="feature-card__title">Secure &amp; Private</h3>
+        
+        <p class="feature-card__description">
+          Prioritizes data governance. All medical images are processed through encrypted channels and are never stored permanently on our servers.
+        </p>
+        
+        <footer class="feature-card__footer">
+          <a href="{{ url_privacy if url_privacy else '#' }}" class="feature-card__link" aria-label="Learn more about data security and privacy">
+            <span class="feature-card__link-text">Learn More</span>
+            <i class="fa-solid fa-arrow-right feature-card__arrow" aria-hidden="true"></i>
+          </a>
+        </footer>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-card__background-decorator" aria-hidden="true"></div>
+        
+        <div class="feature-card__icon-container">
+          <i class="fa-solid fa-file-medical feature-card__icon" aria-hidden="true"></i>
+        </div>
+        
+        <h3 class="feature-card__title">Medical Reports</h3>
+        
+        <p class="feature-card__description">
+          Generates comprehensive summaries instantly, including confidence score variants, findings breakdown, and clean, downloadable PDF clinical reports.
+        </p>
+        
+        <footer class="feature-card__footer">
+          <a href="{{ url_reports if url_reports else '#' }}" class="feature-card__link" aria-label="Learn more about diagnostic medical reports">
+            <span class="feature-card__link-text">Learn More</span>
+            <i class="fa-solid fa-arrow-right feature-card__arrow" aria-hidden="true"></i>
+          </a>
+        </footer>
+      </article>
+
+    </div>
+  </div>
+</section>

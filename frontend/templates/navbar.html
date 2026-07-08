@@ -1,0 +1,164 @@
+<nav class="pneumo-nav pneumo-nav--sticky pneumo-nav--glassmorphism" 
+     aria-label="Main Navigation" 
+     role="navigation">
+    <div class="container-fluid pneumo-nav__container">
+        
+          <a class="pneumo-nav__brand" 
+              href="{{ url_for('home') }}" 
+           aria-label="PneumoAI Homepage">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                 alt="" 
+                 class="pneumo-nav__logo-img"
+                 width="40" 
+                 height="40"
+                 aria-hidden="true">
+            <span class="pneumo-nav__logo-text">Pneumo<span class="pneumo-nav__logo-accent">AI</span></span>
+        </a>
+
+        <div class="pneumo-nav__menu d-none d-lg-flex" id="desktopNavMenu">
+            <ul class="pneumo-nav__list" role="list">
+                
+                <li class="pneumo-nav__item" role="listitem">
+                    <a class="pneumo-nav__link {% if request.endpoint == 'home' %}pneumo-nav__link--active{% endif %}" 
+                       href="{{ url_for('home') }}"
+                       {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
+                        Home
+                    </a>
+                </li>
+                
+                <li class="pneumo-nav__item" role="listitem">
+                    <a class="pneumo-nav__link {% if request.endpoint == 'upload' %}pneumo-nav__link--active{% endif %}" 
+                       href="{{ url_for('upload') }}" 
+                       {% if request.endpoint == 'upload' %}aria-current="page"{% endif %}>
+                        Upload
+                    </a>
+                </li>
+                
+                <li class="pneumo-nav__item" role="listitem">
+                    <a class="pneumo-nav__link {% if request.endpoint == 'history' %}pneumo-nav__link--active{% endif %}" 
+                       href="{{ url_for('history') }}"
+                       {% if request.endpoint == 'history' %}aria-current="page"{% endif %}>
+                        History
+                    </a>
+                </li>
+                
+                <li class="pneumo-nav__item" role="listitem">
+                    <a class="pneumo-nav__link {% if request.endpoint == 'about' %}pneumo-nav__link--active{% endif %}" 
+                       href="{{ url_for('home') }}"
+                       {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>
+                        About
+                    </a>
+                </li>
+                
+                <li class="pneumo-nav__item" role="listitem">
+                    <a class="pneumo-nav__link {% if request.endpoint == 'contact' %}pneumo-nav__link--active{% endif %}" 
+                       href="{{ url_for('home') }}"
+                       {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>
+                        Contact
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+
+        <div class="pneumo-nav__actions d-none d-lg-block">
+            <a href="{{ url_for('upload') }}" 
+               class="btn pneumo-nav__btn-cta" 
+               role="button"
+               aria-label="Navigate to Upload Chest X-Ray interface">
+                <i class="fa-solid fa-cloud-arrow-up pneumo-nav__btn-icon" aria-hidden="true"></i>
+                <span class="pneumo-nav__btn-text">Upload X-ray</span>
+            </a>
+        </div>
+
+        <button class="pneumo-nav__toggle d-lg-none" 
+                type="button" 
+                aria-controls="mobileNavDrawer" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation menu"
+                id="mobileNavToggler">
+            <span class="pneumo-nav__toggle-box" aria-hidden="true">
+                <span class="pneumo-nav__toggle-inner"></span>
+            </span>
+        </button>
+
+    </div>
+</nav>
+
+<div class="pneumo-drawer d-lg-none" 
+     id="mobileNavDrawer" 
+     aria-labelledby="mobileNavToggler" 
+     aria-hidden="true" 
+     tabindex="-1">
+    
+    <div class="pneumo-drawer__backdrop" data-drawer-close></div>
+    
+    <div class="pneumo-drawer__content bg-white shadow-lg" role="document">
+        
+        <div class="pneumo-drawer__header">
+            <span class="pneumo-drawer__title">Menu</span>
+            <button class="btn-close pneumo-drawer__close-btn" 
+                    type="button" 
+                    data-drawer-close 
+                    aria-label="Close navigation menu">
+            </button>
+        </div>
+        
+        <div class="pneumo-drawer__body">
+            <ul class="pneumo-drawer__list" role="list">
+                
+                <li class="pneumo-drawer__item" role="listitem">
+                          <a class="pneumo-drawer__link {% if request.endpoint == 'home' %}pneumo-drawer__link--active{% endif %}" 
+                              href="{{ url_for('home') }}"
+                              {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
+                        <i class="fa-solid fa-house pneumo-drawer__icon" aria-hidden="true"></i>Home
+                    </a>
+                </li>
+                
+                <li class="pneumo-drawer__item" role="listitem">
+                          <a class="pneumo-drawer__link {% if request.endpoint == 'upload' %}pneumo-drawer__link--active{% endif %}" 
+                              href="{{ url_for('upload') }}"
+                              {% if request.endpoint == 'upload' %}aria-current="page"{% endif %}>
+                        <i class="fa-solid fa-upload pneumo-drawer__icon" aria-hidden="true"></i>Upload
+                    </a>
+                </li>
+                
+                <li class="pneumo-drawer__item" role="listitem">
+                          <a class="pneumo-drawer__link {% if request.endpoint == 'history' %}pneumo-drawer__link--active{% endif %}" 
+                              href="{{ url_for('history') }}"
+                              {% if request.endpoint == 'history' %}aria-current="page"{% endif %}>
+                        <i class="fa-solid fa-clock-history pneumo-drawer__icon" aria-hidden="true"></i>History
+                    </a>
+                </li>
+                
+                <li class="pneumo-drawer__item" role="listitem">
+                          <a class="pneumo-drawer__link {% if request.endpoint == 'about' %}pneumo-drawer__link--active{% endif %}" 
+                              href="{{ url_for('home') }}"
+                              {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>
+                        <i class="fa-solid fa-circle-info pneumo-drawer__icon" aria-hidden="true"></i>About
+                    </a>
+                </li>
+                
+                <li class="pneumo-drawer__item" role="listitem">
+                          <a class="pneumo-drawer__link {% if request.endpoint == 'contact' %}pneumo-drawer__link--active{% endif %}" 
+                              href="{{ url_for('home') }}"
+                              {% if request.endpoint == 'contact' %}aria-current="page"{% endif %}>
+                        <i class="fa-solid fa-envelope pneumo-drawer__icon" aria-hidden="true"></i>Contact
+                    </a>
+                </li>
+                
+            </ul>
+            
+            <div class="pneumo-drawer__cta mt-4">
+                     <a href="{{ url_for('upload') }}" 
+                         class="btn pneumo-drawer__btn-cta w-100" 
+                   role="button"
+                   aria-label="Navigate to Upload Chest X-Ray interface">
+                    <i class="fa-solid fa-cloud-arrow-up pneumo-drawer__btn-icon" aria-hidden="true"></i>
+                    Upload X-ray
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<nav class="med-navbar" aria-label="Main Navigation" role="navigation">
+    <div class="med-navbar__container">
+        
+        <!-- Logo & Brand -->
+        <a class="med-navbar__brand" href="{{ url_for('home') }}" aria-label="PneumoAI - Home">
+            <div class="med-navbar__logo-circle">
+                <i class="fas fa-lungs" aria-hidden="true"></i>
+            </div>
+            <span class="med-navbar__brand-text">
+                Pneumo<strong>AI</strong>
+            </span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="med-navbar__menu" id="desktopMenu">
+            <ul class="med-navbar__list" role="list">
+                <li role="none">
+                    <a class="med-navbar__link {% if request.endpoint == 'home' %}med-navbar__link--active{% endif %}" 
+                       href="{{ url_for('home') }}"
+                       {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
+                        Dashboard
+                    </a>
+                </li>
+                <li role="none">
+                    <a class="med-navbar__link {% if request.endpoint == 'upload' %}med-navbar__link--active{% endif %}" 
+                       href="{{ url_for('upload') }}"
+                       {% if request.endpoint == 'upload' %}aria-current="page"{% endif %}>
+                        Analyze
+                    </a>
+                </li>
+                <li role="none">
+                    <a class="med-navbar__link {% if request.endpoint == 'history' %}med-navbar__link--active{% endif %}" 
+                       href="{{ url_for('history') }}"
+                       {% if request.endpoint == 'history' %}aria-current="page"{% endif %}>
+                        History
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Primary CTA -->
+        <a href="{{ url_for('upload') }}" class="btn-medical hide-mobile" aria-label="Start diagnosis">
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            Start Analysis
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="med-navbar__toggle show-mobile" id="mobileMenuToggle" aria-expanded="false" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="med-navbar__mobile-menu" id="mobileMenu">
+        <ul class="med-navbar__mobile-list" role="list">
+            <li role="none">
+                <a class="med-navbar__mobile-link" href="{{ url_for('home') }}">Dashboard</a>
+            </li>
+            <li role="none">
+                <a class="med-navbar__mobile-link" href="{{ url_for('upload') }}">Analyze</a>
+            </li>
+            <li role="none">
+                <a class="med-navbar__mobile-link" href="{{ url_for('history') }}">History</a>
+            </li>
+        </ul>
+    </div>
+</nav>

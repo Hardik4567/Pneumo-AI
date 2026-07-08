@@ -1,0 +1,601 @@
+/* ==========================================================================
+   PNEUMOAI HERO SECTION COMPONENT STYLESHEET (hero.css)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. HERO LAYOUT & CONTAINER DEFINITION
+   ========================================================================== */
+.pnm-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff; /* Overriding fallback to match light theme requested */
+    color: #1e293b;
+    padding: 5rem 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.pnm-hero__content-wrapper {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+}
+
+/* ==========================================================================
+   2. HERO BACKGROUND & DECORATIVE ELEMENTS
+   ========================================================================== */
+.pnm-hero__particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+    /* Soft grid overlay pattern */
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(99, 102, 241, 0.04) 1px, transparent 0),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.8), #ffffff);
+    background-size: 40px 40px, 100% 100%;
+}
+
+/* Glowing Ambient Blobs */
+.pnm-hero__glow-blob {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+    filter: blur(80px);
+    opacity: 0.15;
+    will-change: transform;
+}
+
+.pnm-hero__glow-blob--primary {
+    background: radial-gradient(circle, #3b82f6 0%, rgba(59, 130, 246, 0) 70%);
+    top: -10%;
+    right: -5%;
+    animation: blobPanPrimary 25s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.pnm-hero__glow-blob--secondary {
+    background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+    bottom: -10%;
+    left: -5%;
+    animation: blobPanSecondary 30s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+/* Tech Circles Layer */
+.pnm-hero__animated-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(99, 102, 241, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.pnm-hero__animated-circle--1 {
+    width: 850px;
+    height: 850px;
+    animation: driftRotateClockwise 80s linear infinite;
+}
+
+.pnm-hero__animated-circle--2 {
+    width: 1200px;
+    height: 1200px;
+    animation: driftRotateCounterClockwise 120s linear infinite;
+}
+
+/* ==========================================================================
+   3. HERO CONTENT & TYPOGRAPHY
+   ========================================================================== */
+.pnm-hero__text-block {
+    animation: segmentFadeUp 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+}
+
+/* Round Pill AI Badge */
+.pnm-hero__badge-container {
+    background-color: rgba(59, 130, 246, 0.08) !important;
+    border: 1px solid rgba(59, 130, 246, 0.15) !important;
+    padding: 0.5rem 1.25rem !important;
+    transition: all 0.3s ease;
+}
+
+.pnm-hero__badge-container:hover {
+    background-color: rgba(59, 130, 246, 0.12) !important;
+    border-color: rgba(59, 130, 246, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.pnm-hero__badge-text {
+    letter-spacing: 0.125em !important;
+    font-size: 0.75rem !important;
+    color: #2563eb !important;
+}
+
+/* Core Responsive Header */
+.pnm-hero__heading {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.025em !important;
+}
+
+/* Standard Compliant Gradient Typography Selector */
+.pnm-hero__gradient-text {
+    background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent;
+    display: inline-block;
+}
+
+.pnm-hero__paragraph {
+    color: #475569 !important;
+    font-size: 1.125rem !important;
+    line-height: 1.65 !important;
+    max-width: 540px;
+}
+
+/* ==========================================================================
+   4. HERO BUTTONS & ACTIONS
+   ========================================================================== */
+.pnm-hero__ctas {
+    animation: segmentFadeUp 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) 0.15s forwards;
+    opacity: 0;
+}
+
+/* Premium Primary Button with Animated Shine */
+.pnm-hero__ctas .btn-primary {
+    position: relative;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.35) !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.pnm-hero__ctas .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: none;
+    z-index: 2;
+}
+
+/* Primary Hover Interaction */
+.pnm-hero__ctas .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px 0 rgba(37, 99, 235, 0.45) !important;
+}
+
+.pnm-hero__ctas .btn-primary:hover::before {
+    animation: flashShine 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.pnm-hero__ctas .btn-primary:focus-visible {
+    outline: 3px solid #60a5fa !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+}
+
+/* Secondary Action Outline Button */
+.pnm-hero__ctas .btn-outline-light {
+    color: #475569 !important;
+    border: 1px solid #cbd5e1 !important;
+    background-color: rgba(248, 250, 252, 0.6) !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+.pnm-hero__ctas .btn-outline-light:hover {
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
+    background-color: #f1f5f9 !important;
+    transform: translateY(-2px);
+}
+
+.pnm-hero__ctas .btn-outline-light:focus-visible {
+    outline: 3px solid #94a3b8 !important;
+    outline-offset: 2px !important;
+}
+
+/* ==========================================================================
+   5. HERO STATISTICS GRID
+   ========================================================================== */
+#heroStats {
+    animation: segmentFadeUp 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) 0.3s forwards;
+    opacity: 0;
+}
+
+/* Glassmorphic Metrics Card Setup */
+.pnm-hero-stat {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    border-radius: 14px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.pnm-hero-stat:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(194, 205, 220, 1) !important;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 16px -6px rgba(15, 23, 42, 0.03);
+}
+
+.pnm-hero-stat__value {
+    letter-spacing: -0.03em;
+    font-size: 1.75rem !important;
+}
+
+.pnm-hero-stat__label {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 600;
+    color: #64748b !important;
+    margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   6. TRUST COMPLIANCE BADGES
+   ========================================================================== */
+.pnm-hero__trust {
+    animation: segmentFadeUp 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) 0.45s forwards;
+    opacity: 0;
+}
+
+.pnm-hero__trust-title {
+    font-size: 0.65rem !important;
+    color: #94a3b8 !important;
+    letter-spacing: 0.15em !important;
+}
+
+.pnm-hero-trust-badge {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.pnm-hero-trust-badge span {
+    color: #64748b !important;
+    font-size: 0.8rem;
+}
+
+.pnm-hero-trust-badge:hover {
+    opacity: 1 !important;
+    transform: scale(1.03);
+}
+
+/* ==========================================================================
+   7. HERO ILLUSTRATION CONTAINER
+   ========================================================================== */
+.pnm-hero__image-wrapper {
+    position: relative;
+    perspective: 1000px;
+    animation: graphicEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.pnm-hero__figure {
+    position: relative;
+    border-radius: 24px !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    background-color: #f8fafc !important;
+    box-shadow: 
+        0 20px 40px -15px rgba(15, 23, 42, 0.08),
+        0 15px 25px -10px rgba(15, 23, 42, 0.04),
+        0 0 0 1px rgba(15, 23, 42, 0.02) !important;
+    transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: masterFloat 6s ease-in-out infinite;
+}
+
+.pnm-hero__figure:hover {
+    transform: scale(1.015) rotateX(1deg) rotateY(-1deg);
+}
+
+.pnm-hero__img {
+    opacity: 0.95 !important;
+    border-radius: 23px;
+    transition: all 0.5s ease;
+}
+
+/* ==========================================================================
+   8. FLOATING GLASS INFORMATION CARDS
+   ========================================================================== */
+.pnm-hero-float {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 
+        0 10px 30px -10px rgba(15, 23, 42, 0.15), 
+        0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+    z-index: 10;
+    will-change: transform;
+}
+
+/* Float Card A: Prediction Nodal Overlay */
+.pnm-hero-float--prediction {
+    animation: internalFloatFirst 5s ease-in-out infinite alternate;
+}
+
+.pnm-hero-float--prediction h2 {
+    color: #0f172a !important;
+}
+
+.pnm-hero-float--prediction .bg-danger-subtle {
+    background-color: #fee2e2 !important;
+}
+
+/* Float Card B: Certainty Percentage Display */
+.pnm-hero-float--confidence {
+    animation: internalFloatSecond 5.5s ease-in-out infinite alternate-reverse;
+}
+
+.pnm-hero-float--confidence .bg-secondary {
+    background-color: #e2e8f0 !important;
+}
+
+/* Float Card C: Grad-CAM Feature Label */
+.pnm-hero-float--gradcam {
+    animation: internalFloatFirst 6s ease-in-out 0.5s infinite alternate;
+}
+
+.pnm-hero-float--gradcam span {
+    color: #1e293b !important;
+}
+
+/* Float Card D: Secure Token Node Badge */
+.pnm-hero-float--secure {
+    background: rgba(255, 255, 255, 0.9) !important;
+    animation: glowPulseRing 3s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   9. SCROLL INDICATOR
+   ========================================================================== */
+#heroScroll {
+    z-index: 10;
+    animation: macroBounce 2s infinite;
+}
+
+.pnm-hero__mouse {
+    border-color: #cbd5e1 !important;
+}
+
+.pnm-hero__wheel {
+    background-color: #64748b !important;
+    animation: cursorScrollTrack 1.5s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   10. POLISHED SYSTEM KEYFRAMES ANIMATIONS
+   ========================================================================== */
+@keyframes segmentFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes graphicEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.96) rotateY(4deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+    }
+}
+
+@keyframes masterFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes internalFloatFirst {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-8px) scale(1.02); }
+}
+
+@keyframes internalFloatSecond {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(10px) scale(0.99); }
+}
+
+@keyframes blobPanPrimary {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(40px, -60px) scale(1.1); }
+    66% { transform: translate(-30px, 20px) scale(0.95); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes blobPanSecondary {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(-50px, 40px) scale(0.9); }
+    66% { transform: translate(40px, -30px) scale(1.15); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes driftRotateClockwise {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes driftRotateCounterClockwise {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+@keyframes glowPulseRing {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.25), 0 4px 12px rgba(0,0,0,0.05); }
+    50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0), 0 4px 12px rgba(0,0,0,0.05); }
+}
+
+@keyframes flashShine {
+    100% { left: 200%; }
+}
+
+@keyframes macroBounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -10px); }
+    60% { transform: translate(-50%, -4px); }
+}
+
+@keyframes cursorScrollTrack {
+    0% { opacity: 0; transform: translate(-50%, 0); }
+    40% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, 8px); }
+}
+
+/* ==========================================================================
+   11. RESPONSIVE DESIGN BREAKPOINTS
+   ========================================================================== */
+
+/* Laptop Display Layer (992px - 1199px) */
+@media (max-width: 1199px) {
+    .pnm-hero__heading {
+        font-size: 2.75rem !important;
+    }
+    .pnm-hero__paragraph {
+        font-size: 1rem !important;
+    }
+    .pnm-hero__figure {
+        max-width: 460px;
+        margin: 0 auto !important;
+    }
+    .pnm-hero__animated-circle--1 { width: 700px; height: 700px; }
+    .pnm-hero__animated-circle--2 { width: 950px; height: 950px; }
+}
+
+/* Tablet Display Layer (768px - 991px) */
+@media (max-width: 991px) {
+    .pnm-hero {
+        padding: 4rem 0;
+        text-align: center;
+    }
+    .pnm-hero__text-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .pnm-hero__paragraph {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pnm-hero__ctas {
+        justify-content: center;
+    }
+    #heroStats {
+        justify-content: center;
+        max-width: 600px;
+        margin: 0 auto 3rem auto !important;
+    }
+    .pnm-hero__trust-badges {
+        justify-content: center;
+    }
+    .pnm-hero__image-wrapper {
+        margin-top: 2rem;
+        max-width: 500px;
+    }
+    .pnm-hero-float--prediction { top: 5%; left: 0%; }
+    .pnm-hero-float--confidence { bottom: 10%; right: 0%; }
+}
+
+/* Mobile Display Layer (<= 767px) */
+@media (max-width: 767px) {
+    .pnm-hero {
+        padding: 3rem 0 5rem 0;
+    }
+    .pnm-hero__heading {
+        font-size: 2.25rem !important;
+    }
+    .pnm-hero__ctas .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    #heroStats {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    #heroStats .col-6 {
+        width: 100%;
+    }
+    .pnm-hero-stat {
+        padding: 0.85rem;
+    }
+    /* Optimization: Disable intricate floats on mobile layouts to ensure grid reliability */
+    .pnm-hero-float {
+        display: none !important;
+    }
+    .pnm-hero__glow-blob {
+        width: 300px;
+        height: 300px;
+    }
+    .pnm-hero__trust-badges {
+        gap: 1rem;
+    }
+    #heroScroll {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   12. ACCESSIBILITY SYSTEM (PREFERS-REDUCED-MOTION)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .pnm-hero__glow-blob,
+    .pnm-hero__animated-circle,
+    .pnm-hero__figure,
+    .pnm-hero-float,
+    .pnm-hero__wheel,
+    #heroScroll,
+    .btn-primary::before {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+    
+    .pnm-hero__text-block,
+    .pnm-hero__ctas,
+    #heroStats,
+    .pnm-hero__trust,
+    .pnm-hero__image-wrapper {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+    
+    .pnm-hero-stat:hover,
+    .pnm-hero__badge-container:hover,
+    .pnm-hero-trust-badge:hover,
+    .pnm-hero__figure:hover {
+        transform: none !important;
+    }
+}

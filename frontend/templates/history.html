@@ -1,0 +1,544 @@
+{% extends 'base.html' %}
+{% block title %}Scan History — PneumoAI{% endblock %}
+{% block content %}
+<style>
+  .history-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+  .history-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+  .history-sub{font-size:13px;color:rgba(255,255,255,0.4)}
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+  .controls-row{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .search-wrap{flex:1;min-width:200px;position:relative}
+  .search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.3);font-size:13px;pointer-events:none}
+  .search-input{width:100%;padding:9px 12px 9px 36px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#fff;font-size:13px;outline:none;transition:border-color 0.2s;font-family:Inter,sans-serif}
+  .search-input:focus{border-color:rgba(79,142,247,0.5);background:rgba(79,142,247,0.05)}
+  .search-input::placeholder{color:rgba(255,255,255,0.25)}
+  .filter-group{display:flex;gap:4px}
+  .filter-btn{padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,255,255,0.5);font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:Inter,sans-serif}
+  .filter-btn:hover{color:#fff;background:rgba(255,255,255,0.06)}
+  .filter-btn.active{color:#4f8ef7;background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.3)}
+  .table-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden}
+  .table-header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
+  .table-title{font-size:13px;font-weight:600;color:#fff}
+  .th-row{display:grid;grid-template-columns:40px 130px 55px 70px 100px 100px 140px 80px;gap:10px;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .th{font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px}
+  .history-row{display:grid;grid-template-columns:40px 130px 55px 70px 100px 100px 140px 80px;gap:10px;padding:13px 20px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center;transition:background 0.2s;cursor:pointer}
+  .history-row:last-child{border-bottom:none}
+  .history-row:hover{background:rgba(255,255,255,0.03)}
+  .xray-thumb{width:40px;height:40px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:16px;border:1px solid rgba(255,255,255,0.08)}
+  .action-btn-sm{width:30px;height:30px;border-radius:7px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.2s}
+  .action-btn-sm:hover{background:rgba(79,142,247,0.12);border-color:rgba(79,142,247,0.3);color:#4f8ef7}
+  .action-btn-sm.del:hover{background:rgba(255,71,87,0.1);border-color:rgba(255,71,87,0.25);color:#ff4757}
+  .empty-state{padding:64px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .empty-icon{width:80px;height:80px;border-radius:50%;background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.15);display:flex;align-items:center;justify-content:center;font-size:30px;color:rgba(79,142,247,0.4);margin-bottom:4px}
+  .loading-state{padding:48px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .spinner{width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,0.06);border-top:3px solid #4f8ef7;animation:spin 0.9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .error-state{padding:32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .pagination{display:flex;align-items:center;justify-content:center;gap:6px;padding:16px;border-top:1px solid rgba(255,255,255,0.05)}
+  .page-btn{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:Inter,sans-serif}
+  .page-btn:hover{background:rgba(255,255,255,0.06);color:#fff}
+  .page-btn.active{background:rgba(79,142,247,0.15);border-color:rgba(79,142,247,0.35);color:#4f8ef7}
+
+  /* Detail Modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal{background:#0d1228;border:1px solid rgba(255,255,255,0.1);border-radius:16px;width:100%;max-width:520px;overflow:hidden;animation:fade-up 0.3s ease both}
+  .modal-header{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between}
+  .modal-title{font-size:15px;font-weight:600;color:#fff}
+  .modal-close{width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px}
+  .modal-close:hover{color:#fff;background:rgba(255,255,255,0.1)}
+  .modal-body{padding:22px}
+  .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .modal-field{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px}
+  .modal-field-label{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .modal-field-value{font-size:13px;color:#fff;font-weight:500}
+</style>
+
+<!-- Header -->
+<div class="history-hdr fade-up">
+  <div>
+    <div class="history-title">Scan History</div>
+    <div class="history-sub">View and manage your past scans from database</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button id="refreshBtn" class="btn btn-ghost btn-sm"><i class="fas fa-rotate-right"></i> Refresh</button>
+    <a href="/upload" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> New Scan</a>
+    <button id="exportPdfBtn" class="btn btn-primary btn-sm">
+      📄 Export PDF
+    </button>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row fade-up-2">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fas fa-x-ray"></i></div>
+    <div class="stat-label">Total Scans</div>
+    <div class="stat-value" id="statTotal">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="color:#ff4757"><i class="fas fa-lungs-virus"></i></div>
+    <div class="stat-label">Pneumonia</div>
+    <div class="stat-value" id="statPneumonia" style="color:#ff4757">—</div>
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff4757,#ff6b35)"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="color:#00d4aa"><i class="fas fa-check-circle"></i></div>
+    <div class="stat-label">Normal</div>
+    <div class="stat-value" id="statNormal" style="color:#00d4aa">—</div>
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00d4aa,#4f8ef7)"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="color:#7c5cbf"><i class="fas fa-bullseye"></i></div>
+    <div class="stat-label">Avg Confidence</div>
+    <div class="stat-value" id="statAvgConf" style="color:#7c5cbf">—</div>
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#7c5cbf,#4f8ef7)"></div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div class="controls-row fade-up-3">
+  <div class="search-wrap">
+    <i class="fas fa-magnifying-glass"></i>
+    <input type="text" id="histSearch" class="search-input" placeholder="Search by patient name, disease..."/>
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" data-filter="all">All Results</button>
+    <button class="filter-btn" data-filter="normal">Normal</button>
+    <button class="filter-btn" data-filter="pneumonia">Pneumonia</button>
+  </div>
+  <select id="dateFilter" style="padding:8px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:rgba(255,255,255,0.6);font-size:12px;outline:none;cursor:pointer;font-family:Inter,sans-serif">
+    <option value="all" style="background:#0d1228">All Dates</option>
+    <option value="7"   style="background:#0d1228">Last 7 days</option>
+    <option value="30"  style="background:#0d1228">Last 30 days</option>
+  </select>
+</div>
+
+<!-- Table -->
+<div class="table-card fade-up-4">
+  <div class="table-header">
+    <div class="table-title">Scan Records</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.3)" id="recordCount">Loading...</div>
+  </div>
+
+  <div class="th-row">
+    <div class="th">#</div>
+    <div class="th">Patient</div>
+    <div class="th">Age</div>
+    <div class="th">Image</div>
+    <div class="th">Result</div>
+    <div class="th">Confidence</div>
+    <div class="th">Date</div>
+    <div class="th">Actions</div>
+  </div>
+
+  <!-- Loading -->
+  <div id="loadingState" class="loading-state">
+    <div class="spinner"></div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.4)">Loading history from database...</div>
+  </div>
+
+  <!-- Error -->
+  <div id="errorState" class="error-state d-none">
+    <i class="fas fa-triangle-exclamation" style="font-size:32px;color:#ff4757"></i>
+    <div style="font-size:14px;font-weight:600;color:#ff4757">Failed to load history</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.4)" id="errorMsg">Could not connect to backend.</div>
+    <button id="retryBtn" class="btn btn-ghost btn-sm" style="margin-top:4px"><i class="fas fa-rotate-right"></i> Retry</button>
+  </div>
+
+  <!-- Empty -->
+  <div id="historyEmpty" class="empty-state d-none">
+    <div class="empty-icon"><i class="fas fa-clock-rotate-left"></i></div>
+    <div style="font-size:15px;font-weight:600;color:#fff">No scans yet</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.4)">Upload your first chest X-ray to get started</div>
+    <a href="/upload" class="btn btn-primary" style="margin-top:8px"><i class="fas fa-upload"></i> Upload Scan</a>
+  </div>
+
+  <!-- Rows -->
+  <div id="historyItems"></div>
+
+  <!-- Pagination -->
+  <div class="pagination d-none" id="paginationWrap">
+    <button class="page-btn" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+    <div id="pageButtons" style="display:flex;gap:6px"></div>
+    <button class="page-btn" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div id="detailModal" class="modal-overlay d-none">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fas fa-file-medical" style="color:#4f8ef7;margin-right:8px"></i>Scan Details</div>
+      <button class="modal-close" id="closeModal"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="modal-field">
+          <div class="modal-field-label">Patient Name</div>
+          <div class="modal-field-value" id="mPatientName">—</div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Age</div>
+          <div class="modal-field-value" id="mPatientAge">—</div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Gender</div>
+          <div class="modal-field-value" id="mPatientGender">—</div>
+        </div>
+        <div class="modal-field" style="grid-column:span 2">
+          <div class="modal-field-label">X-Ray Image</div>
+          <div style="margin-top:8px;border-radius:8px;overflow:hidden;background:#000;position:relative;min-height:80px">
+            <img id="mImage" src="" alt="X-Ray" style="display:none;width:100%;max-height:180px;object-fit:contain;border-radius:8px"/>
+            <div id="mImagePlaceholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:6px;color:rgba(255,255,255,0.2);font-size:12px">
+              <i class="fas fa-x-ray" style="font-size:24px"></i>
+              <span>No image available</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Detected Disease</div>
+          <div class="modal-field-value" id="mDisease">—</div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-field-label">Confidence</div>
+          <div class="modal-field-value" id="mConfidence">—</div>
+        </div>
+        <div class="modal-field" style="grid-column:span 2">
+          <div class="modal-field-label">Prediction Date</div>
+          <div class="modal-field-value" id="mDate">—</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:8px">
+        <button class="btn btn-ghost w-full" id="closeModalBtn"><i class="fas fa-xmark"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block page_js %}
+<script>
+'use strict';
+const _token = localStorage.getItem('accessToken');
+if (!_token) { window.location.href = '/login'; }
+(function(){
+
+  /* ── State ── */
+  let allItems = [];
+  let filtered = [];
+  let currentPage = 1;
+  const PER_PAGE = 10;
+  let query = '';
+  let filter = 'all';
+  let dateFilter = 'all';
+
+  /* ── DOM ── */
+  const $ = id => document.getElementById(id);
+
+  /* ── Format helpers ── */
+  const fmtDate = iso => {
+    try {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'short', day: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', hour12: true
+      }).format(new Date(iso));
+    } catch { return iso; }
+  };
+
+  const fmtConf = c => isNaN(c) ? '—' : parseFloat(c).toFixed(1) + '%';
+
+  /* ── States ── */
+  const showLoading = () => {
+    $('loadingState').classList.remove('d-none');
+    $('errorState').classList.add('d-none');
+    $('historyEmpty').classList.add('d-none');
+    $('historyItems').innerHTML = '';
+    $('paginationWrap').classList.add('d-none');
+  };
+
+  const showError = msg => {
+    $('loadingState').classList.add('d-none');
+    $('errorState').classList.remove('d-none');
+    $('errorMsg').textContent = msg || 'Could not connect to backend.';
+  };
+
+  const showEmpty = () => {
+    $('loadingState').classList.add('d-none');
+    $('errorState').classList.add('d-none');
+    $('historyEmpty').classList.remove('d-none');
+    $('historyItems').innerHTML = '';
+    $('recordCount').textContent = '0 records';
+  };
+
+  /* ── Fetch from backend ── */
+const fetchHistory = async () => {
+    showLoading();
+    const token = localStorage.getItem('accessToken');
+    if (!token) { window.location.href = '/'; return; }
+    try {
+        const res = await fetch('/api/history', {
+            signal: AbortSignal.timeout(10000),
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (res.status === 401) {
+            localStorage.clear();
+            window.location.href = '/';
+            return;
+        }
+
+        const json = await res.json();
+        const items = json?.data || [];
+
+        if (!Array.isArray(items)) throw new Error('Unexpected response format');
+
+        allItems = items;
+        updateStats(allItems);
+        applyFilters();
+    } catch(e) {
+        showError(e.message || 'Failed to load history.');
+    }
+};
+
+  /* ── Stats ── */
+  const updateStats = items => {
+    const total = items.length;
+    const pneumonia = items.filter(i => i.detected_disease?.toLowerCase().includes('pneumonia')).length;
+    const normal = total - pneumonia;
+    const avgConf = total > 0
+      ? (items.reduce((s, i) => s + (parseFloat(i.confidence) || 0), 0) / total).toFixed(1) + '%'
+      : '—';
+
+    $('statTotal').textContent     = total;
+    $('statPneumonia').textContent = pneumonia;
+    $('statNormal').textContent    = normal;
+    $('statAvgConf').textContent   = avgConf;
+  };
+
+  /* ── Filter ── */
+  const applyFilters = () => {
+    const now = new Date();
+    filtered = allItems.filter(item => {
+      const disease = (item.detected_disease || '').toLowerCase();
+      const name    = (item.patient_name || '').toLowerCase();
+      const image   = (item.image_name || '').toLowerCase();
+      const q       = query.toLowerCase();
+
+      const matchQ = !q || disease.includes(q) || name.includes(q) || image.includes(q);
+      const matchF = filter === 'all'
+        || (filter === 'normal'    && disease === 'normal')
+        || (filter === 'pneumonia' && disease.includes('pneumonia'));
+
+      let matchD = true;
+      if (dateFilter !== 'all' && item.prediction_date) {
+        const days = parseInt(dateFilter);
+        const itemDate = new Date(item.prediction_date);
+        matchD = (now - itemDate) / (1000 * 60 * 60 * 24) <= days;
+      }
+
+      return matchQ && matchF && matchD;
+    });
+
+    currentPage = 1;
+    renderPage();
+  };
+
+  /* ── Render ── */
+  const renderPage = () => {
+    $('loadingState').classList.add('d-none');
+    $('errorState').classList.add('d-none');
+
+    if (filtered.length === 0) { showEmpty(); return; }
+
+    $('historyEmpty').classList.add('d-none');
+    $('recordCount').textContent = filtered.length + ' record' + (filtered.length !== 1 ? 's' : '');
+
+    const start = (currentPage - 1) * PER_PAGE;
+    const page  = filtered.slice(start, start + PER_PAGE);
+
+    $('historyItems').innerHTML = page.map((item, idx) => {
+      const isPneumonia = item.detected_disease?.toLowerCase().includes('pneumonia');
+      const badgeStyle  = isPneumonia
+        ? 'background:rgba(255,71,87,0.12);color:#ff4757;border:1px solid rgba(255,71,87,0.25)'
+        : 'background:rgba(0,212,170,0.12);color:#00d4aa;border:1px solid rgba(0,212,170,0.25)';
+      const confColor = isPneumonia ? '#ff4757' : '#00d4aa';
+      const globalIdx = start + idx;
+
+      return `
+        <div class="history-row" style="animation:fade-up 0.3s ease ${idx * 0.03}s both"
+             onclick="window.__histView(${item.history_id})">
+          <div style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:500">${item.history_id}</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:2px">${item.patient_name}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35)">${item.patient_gender}</div>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6)">${item.patient_age} yrs</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+               title="${item.image_name}">${item.image_name}</div>
+          <div>
+            <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;${badgeStyle}">
+              ${item.detected_disease}
+            </span>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:${confColor}">${fmtConf(item.confidence)}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.4">
+            ${item.prediction_date ? fmtDate(item.prediction_date) : '—'}
+          </div>
+          <div style="display:flex;gap:6px" onclick="event.stopPropagation()">
+            <button class="action-btn-sm" onclick="window.__histView(${item.history_id})" title="View Details">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="action-btn-sm del" onclick="window.__histDelete(${item.history_id})" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+
+    renderPagination();
+  };
+
+  /* ── Pagination ── */
+  const renderPagination = () => {
+    const totalPages = Math.ceil(filtered.length / PER_PAGE);
+    const wrap = $('paginationWrap');
+
+    if (totalPages <= 1) { wrap.classList.add('d-none'); return; }
+    wrap.classList.remove('d-none');
+
+    const btns = $('pageButtons');
+    btns.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.onclick = () => { currentPage = i; renderPage(); };
+      btns.appendChild(btn);
+    }
+
+    $('prevPage').onclick = () => { if (currentPage > 1) { currentPage--; renderPage(); } };
+    $('nextPage').onclick = () => { if (currentPage < totalPages) { currentPage++; renderPage(); } };
+  };
+
+  /* ── View detail modal ── */
+  window.__histView = async id => {
+    try {
+      /* Find from already-loaded data first */
+      let item = allItems.find(i => i.history_id === id);
+      if (!item) {
+        const token = localStorage.getItem('accessToken');
+        const res = await fetch(`/api/history/${id}`, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+        const json = await res.json();
+        item = json?.data;
+      }
+      if (!item) return;
+
+      const isPneumonia = item.detected_disease?.toLowerCase().includes('pneumonia');
+      $('mPatientName').textContent   = item.patient_name || '—';
+      $('mPatientAge').textContent    = item.patient_age ? item.patient_age + ' years' : '—';
+      $('mPatientGender').textContent = item.patient_gender || '—';
+      const img = $('mImage');
+      const placeholder = $('mImagePlaceholder');
+      if(item.image_path){
+        img.src = item.image_path;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+      } else {
+        img.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+      $('mDisease').textContent       = item.detected_disease || '—';
+      $('mDisease').style.color       = isPneumonia ? '#ff4757' : '#00d4aa';
+      $('mConfidence').textContent    = fmtConf(item.confidence);
+      $('mConfidence').style.color    = isPneumonia ? '#ff4757' : '#00d4aa';
+      $('mDate').textContent          = item.prediction_date ? fmtDate(item.prediction_date) : '—';
+
+      $('detailModal').classList.remove('d-none');
+    } catch(e) {
+      console.error('Could not load record:', e);
+    }
+  };
+
+  /* ── Delete ── */
+  window.__histDelete = async id => {
+    if (!confirm(`Delete scan record #${id}? This cannot be undone.`)) return;
+    try {
+      const token = localStorage.getItem('accessToken');
+      const res = await fetch(`/api/history/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (res.ok) {
+        allItems = allItems.filter(i => i.history_id !== id);
+        updateStats(allItems);
+        applyFilters();
+        if (window.PneumoAI) window.PneumoAI.showToast('Record deleted successfully.', 'success');
+      } else {
+        if (window.PneumoAI) window.PneumoAI.showToast('Failed to delete record.', 'error');
+      }
+    } catch(e) {
+      if (window.PneumoAI) window.PneumoAI.showToast('Network error. Please try again.', 'error');
+    }
+  };
+
+  /* ── Events ── */
+  const initEvents = () => {
+    $('histSearch')?.addEventListener('input', e => { query = e.target.value; applyFilters(); });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filter = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    $('dateFilter')?.addEventListener('change', e => { dateFilter = e.target.value; applyFilters(); });
+
+    $('refreshBtn')?.addEventListener('click', fetchHistory);
+    $('retryBtn')?.addEventListener('click', fetchHistory);
+    $('exportPdfBtn')?.addEventListener('click', async () => {
+      const token = localStorage.getItem('accessToken');
+      if (!token) return;
+      if (window.PneumoAI) window.PneumoAI.showToast('Exporting PDF...', 'info');
+      try {
+        const res = await fetch('/api/history/export/pdf', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) throw new Error('PDF export failed');
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'history_report.pdf';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        if (window.PneumoAI) window.PneumoAI.showToast('History PDF downloaded', 'success');
+      } catch (err) {
+        console.error(err);
+        if (window.PneumoAI) window.PneumoAI.showToast('Export failed', 'error');
+      }
+    });
+
+    $('closeModal')?.addEventListener('click',    () => $('detailModal').classList.add('d-none'));
+    $('closeModalBtn')?.addEventListener('click', () => $('detailModal').classList.add('d-none'));
+    $('detailModal')?.addEventListener('click', e => {
+      if (e.target === $('detailModal')) $('detailModal').classList.add('d-none');
+    });
+  };
+
+  /* ── Init ── */
+  const init = () => { initEvents(); fetchHistory(); };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
+})();
+</script>
+{% endblock %}

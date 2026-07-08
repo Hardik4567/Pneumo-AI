@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+{% block title %}Scan Result — PneumoAI{% endblock %}
+{% block content %}
+<style>
+  .result-layout{display: flex;flex-direction: row;grid-template-columns:280px 1fr 260px;gap:16px;align-items:start}
+  .result-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+  .result-hdr-title{font-size:18px;font-weight:700;color:#fff}
+  .result-hdr-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px}
+
+  /* Xray panel */
+  .xray-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden}
+  .xray-panel-header{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px}
+  .xray-img-wrap{position:relative;background:#000;aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .xray-img{width:100%;height:100%;object-fit:contain}
+  .xray-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 70%,rgba(7,11,24,0.6))}
+  .xray-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#4f8ef7,#00d4aa,transparent);animation:scan-move 3s linear infinite}
+  .xray-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:220px;color:rgba(255,255,255,0.2);font-size:12px;gap:8px}
+  .xray-placeholder i{font-size:36px}
+
+  /* Center result */
+  .result-center{display:flex;flex-direction:column;gap:14px;max-width: 590px;}
+  .pred-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;position:relative}
+  .pred-top-bar{height:3px;background:linear-gradient(90deg,#4f8ef7,#7c5cbf,#00d4aa)}
+  .pred-body{padding:24px}
+  .pred-label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+  .pred-value{font-size:32px;font-weight:700;margin-bottom:16px;line-height:1}
+  .pred-value.pneumonia{color:#ff4757}
+  .pred-value.normal{color:#00d4aa}
+  .conf-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .conf-label{font-size:12px;color:rgba(255,255,255,0.4)}
+  .conf-val{font-size:20px;font-weight:700;color:#fff}
+  .conf-bar{height:8px;border-radius:999px;background:rgba(255,255,255,0.07);overflow:hidden;margin-bottom:14px}
+  .conf-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#4f8ef7,#7c5cbf);transition:width 1.2s ease}
+  .severity-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.05);margin-bottom:10px}
+  .severity-label{font-size:11px;color:rgba(255,255,255,0.4)}
+  .severity-val{font-size:13px;font-weight:600}
+  .severity-bar{display:flex;gap:4px;align-items:center}
+  .sev-dot{width:16px;height:6px;border-radius:3px}
+
+  /* Analysis Details */
+  .analysis-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px}
+  .analysis-title{font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .analysis-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px}
+  .analysis-row:last-child{border-bottom:none}
+  .analysis-key{color:rgba(255,255,255,0.4)}
+  .analysis-val{color:#fff;font-weight:500}
+
+  /* AI Explanation */
+  .explain-card{background:rgba(79,142,247,0.05);border:1px solid rgba(79,142,247,0.15);border-radius:14px;padding:18px}
+  .explain-title{font-size:12px;font-weight:600;color:#4f8ef7;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .explain-text{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.7}
+
+  /* Sidebar right */
+  .prob-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:12px}
+  .prob-row:last-child{border-bottom:none}
+  .action-btns{display:flex;flex-direction:column;gap:8px}
+</style>
+
+<div class="result-hdr fade-up">
+  <div>
+    <div class="result-hdr-title"><i class="fas fa-file-waveform" style="color:#4f8ef7;margin-right:10px"></i>Scan Result</div>
+    <div class="result-hdr-sub">Analysis completed successfully</div>
+  </div>
+  <a href="/upload" class="btn btn-ghost btn-sm"><i class="fas fa-plus"></i> New Scan</a>
+</div>
+
+<div class="result-layout">
+
+  <!-- LEFT: Xray Image -->
+  <div style="display:flex;flex-direction:column;gap:14px;width: 400px;height: 700px;">
+
+    <!-- Original X-Ray panel -->
+    <div class="xray-panel fade-up-2">
+      <div class="xray-panel-header">
+        <i class="fas fa-x-ray" style="margin-right:6px;color:#4f8ef7"></i>Original X-Ray
+      </div>
+      <div class="xray-img-wrap">
+
+        <!--
+          FIX: removed onerror inline handler — it was hiding this element
+          immediately because src="" triggers onerror in most browsers.
+          Visibility is now managed entirely by prediction.js (renderOriginalImage).
+          img starts hidden; prediction.js makes it visible after setting src.
+        -->
+        <img id="originalImage"
+             src=""
+             alt="X-ray"
+             class="xray-img"
+             style="display:none"/>
+
+        <!-- Placeholder: visible by default, hidden by JS when image loads -->
+        <div id="xrayPlaceholder" class="xray-placeholder">
+          <i class="fas fa-x-ray"></i>
+          <span>No image data</span>
+        </div>
+
+        <div class="xray-overlay"></div>
+        <div class="xray-scan"></div>
+      </div>
+    </div>
+
+    <!-- Grad-CAM Heatmap panel -->
+    <div class="xray-panel fade-up-3">
+      <div class="xray-panel-header">
+        <i class="fas fa-brain" style="margin-right:6px;color:#00d4aa"></i>AI Attention Heatmap
+      </div>
+      <div class="xray-img-wrap">
+
+        <!--
+          FIX: img starts hidden; prediction.js shows it once src is set
+          and the image loads successfully via onload handler.
+        -->
+        <img id="heatmapImage"
+             src=""
+             alt="Grad-CAM Heatmap"
+             class="xray-img"
+             style="display:none"/>
+
+        <!-- Placeholder: visible by default, hidden by JS when heatmap loads -->
+        <div id="heatmapPlaceholder" class="xray-placeholder">
+          <i class="fas fa-fire"></i>
+          <span>Heatmap not available</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Analysis Details -->
+    <!-- <div class="analysis-card fade-up-3">
+      <div class="analysis-title"><i class="fas fa-list-check"></i> Analysis Details</div>
+      <div class="analysis-row"><span class="analysis-key">Model Used</span><span class="analysis-val">DenseNet-121</span></div>
+      <div class="analysis-row"><span class="analysis-key">Scan Date</span><span class="analysis-val" id="scanDate">—</span></div>
+      <div class="analysis-row"><span class="analysis-key">Processing</span><span class="analysis-val" id="analysisTime">—</span></div>
+      <div class="analysis-row"><span class="analysis-key">Image Quality</span><span class="analysis-val" style="color:#00d4aa">Good</span></div>
+    </div>
+
+    <!-- AI Explanation -->
+    <!-- <div class="explain-card fade-up-4">
+      <div class="explain-title"><i class="fas fa-brain"></i> AI Explanation</div>
+      <p class="explain-text" id="explanationText">
+        The AI model analyzes patterns in chest radiographs using deep learning to identify signs of pneumonia.
+      </p>
+    </div> -->
+
+    <div style="display:flex;gap:8px">
+      <button onclick="window.location.href='/upload'" class="btn btn-ghost w-full btn-sm">
+        <i class="fas fa-x-ray"></i> New Scan
+      </button>
+    </div>
+    
+  </div>
+  
+  <!-- CENTER: Main Result -->
+  <div class="result-center fade-up-2">
+    
+    <!-- Disclaimer -->
+    <div style="background:rgba(240,160,96,0.07);border:1px solid rgba(240,160,96,0.18);border-radius:10px;padding:14px;display:flex;gap:10px;align-items:flex-start">
+      <i class="fas fa-triangle-exclamation" style="color:#f0a060;margin-top:1px;flex-shrink:0"></i>
+      <p style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6">
+        <strong style="color:#f0a060">Medical Disclaimer:</strong> This analysis is for informational purposes only and must not replace professional medical advice.
+      </p>
+    </div>
+    <!-- AI Explanation -->
+    <div class="explain-card fade-up-4">
+      <div class="explain-title"><i class="fas fa-brain"></i> AI Explanation</div>
+      <p class="explain-text" id="explanationText">
+        The AI model analyzes patterns in chest radiographs using deep learning to identify signs of pneumonia.
+      </p>
+    </div>
+
+    <div class="pred-card">
+      <div class="pred-top-bar"></div>
+      <div class="pred-body">
+        <div class="pred-label">Result</div>
+        <div class="pred-value normal" id="resultPrediction">Loading…</div>
+
+        <div class="conf-row">
+          <span class="conf-label">Confidence Score</span>
+          <span class="conf-val"><span id="resultConfidence">—</span>%</span>
+        </div>
+        <div class="conf-bar">
+          <div class="conf-fill" id="resultConfidenceBar" style="width:0%"></div>
+        </div>
+
+        <div class="severity-row">
+          <span class="severity-label">Severity Level</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="severity-val" id="severityVal" style="color:#00d4aa">Low Risk</span>
+            <div class="severity-bar">
+              <div class="sev-dot" style="background:#00d4aa"></div>
+              <div class="sev-dot" style="background:rgba(255,255,255,0.1)" id="sev2"></div>
+              <div class="sev-dot" style="background:rgba(255,255,255,0.1)" id="sev3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:14px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Recommendation</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6" id="recommendationText">
+            Consult a healthcare professional for proper diagnosis and treatment.
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Probability bars -->
+    <div class="analysis-card">
+      <div class="analysis-title"><i class="fas fa-chart-bar"></i> Probability Distribution</div>
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+          <span style="color:rgba(255,255,255,0.5)">Pneumonia</span>
+          <span style="color:#ff4757;font-weight:600" id="pneumoniaProb">—</span>
+        </div>
+        <div class="conf-bar"><div class="conf-fill" id="pneumoniaBar" style="width:0%;background:linear-gradient(90deg,#ff4757,#ff6b35)"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+          <span style="color:rgba(255,255,255,0.5)">Normal</span>
+          <span style="color:#00d4aa;font-weight:600" id="normalProb">—</span>
+        </div>
+        <div class="conf-bar"><div class="conf-fill" id="normalBar" style="width:0%;background:linear-gradient(90deg,#00d4aa,#4f8ef7)"></div></div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- RIGHT: Actions + Summary -->
+  <div style="display:flex;flex-direction:column;gap:14px;position:sticky;width:500px;top:80px";class="fade-up-3";>
+
+    <!-- Actions -->
+    <div class="analysis-card">
+      <div class="action-btns">
+        <button id="downloadReportBtn" class="btn btn-primary w-full" disabled>
+          <i class="fas fa-file-pdf"></i> Download Report
+        </button>
+        <button id="newAnalysisBtn" class="btn btn-ghost w-full">
+          <i class="fas fa-plus"></i> New Analysis
+        </button>
+        <button id="shareResultsBtn" class="btn btn-ghost w-full">
+          <i class="fas fa-share-nodes"></i> Share Results
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="analysis-card">
+      <div class="analysis-title"><i class="fas fa-list"></i> Summary</div>
+      <div class="analysis-row"><span class="analysis-key">Analysis Time</span><span class="analysis-val" id="analysisSummaryTime">—</span></div>
+      <div class="analysis-row"><span class="analysis-key">Model</span><span class="analysis-val">DenseNet-121</span></div>
+      <div class="analysis-row"><span class="analysis-key">Version</span><span class="analysis-val">v2.4.0</span></div>
+      <div class="analysis-row"><span class="analysis-key">Date</span><span class="analysis-val" id="analysisDate">—</span></div>
+    </div>
+
+    <!-- Confidence Ring -->
+    <div class="analysis-card" style="text-align:center">
+      <div class="analysis-title" style="justify-content:center"><i class="fas fa-circle-check"></i> Confidence</div>
+      <svg width="100" height="100" viewBox="0 0 100 100" style="margin:0 auto;display:block">
+        <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="url(#cg)" stroke-width="10"
+          stroke-dasharray="239" stroke-dashoffset="239"
+          stroke-linecap="round" transform="rotate(-90 50 50)" id="confRingFill"/>
+        <defs><linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4f8ef7"/><stop offset="100%" stop-color="#00d4aa"/>
+        </linearGradient></defs>
+      </svg>
+      <div style="font-size:22px;font-weight:700;color:#fff;margin-top:8px"><span id="confRingVal">—</span>%</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4)">AI Confidence Score</div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+{% block page_js %}
+<!-- FIX: filename corrected to prediction.js (was result.js which did not exist) -->
+<script src="{{ url_for('static', filename='js/prediction.js') }}"></script>
+<script>
+window.__updateConfRing=function(pct){
+  const ring=document.getElementById('confRingFill');
+  const val=document.getElementById('confRingVal');
+  if(ring){
+    const circ=239;
+    ring.style.strokeDashoffset=circ-(pct/100)*circ;
+    ring.style.stroke=pct>=80?'url(#cg)':pct>=60?'#4f8ef7':'#ff4757';
+    ring.style.transition='stroke-dashoffset 1.2s ease';
+  }
+  if(val) val.textContent=pct.toFixed(1);
+};
+</script>
+{% endblock %}

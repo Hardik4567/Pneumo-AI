@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% block title %}Upload Scan — PneumoAI{% endblock %}
+{% block content %}
+<style>
+  .upload-layout{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+  .upload-main-col{display:flex;flex-direction:column;gap:16px}
+  .upload-sidebar-col{display:flex;flex-direction:column;gap:16px}
+  .page-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+  .page-sub{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:20px}
+
+  /* Drop Zone */
+  .dropzone{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;height:450px;width:900px;padding:70px 55px;border-radius:30px;overflow:hidden;cursor:pointer;transition:all .45s cubic-bezier(.22,1,.36,1);background:linear-gradient(145deg,rgba(18,24,44,.94),rgba(9,13,28,.98));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(35px);box-shadow:0 25px 80px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.05)}
+  .dropzone:hover,.dropzone.active{transform:translateY(-6px);border-color:rgba(111,170,255,.45);box-shadow:0 35px 90px rgba(0,0,0,.55),0 0 60px rgba(79,142,247,.15),inset 0 1px rgba(255,255,255,.08)}
+  .dropzone::before{content:'';position:absolute;inset:-2px;border-radius:32px;background:linear-gradient(90deg,#4f8ef7,#7a5cff,#00d4aa,#4f8ef7);background-size:300% 100%;animation:borderFlow 9s linear infinite;z-index:-2}
+  .dropzone::after{content:'';position:absolute;inset:1px;border-radius:30px;background:linear-gradient(145deg,rgba(12,18,35,.96),rgba(8,11,22,.98));z-index:-1}
+  @keyframes borderFlow{0%{background-position:0%}100%{background-position:300%}}
+  .dropzone-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(79,142,247,.18),transparent 70%);filter:blur(45px);animation:glowFloat 10s ease-in-out infinite;pointer-events:none}
+  @keyframes glowFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.08)}}
+  .dropzone-noise{position:absolute;inset:0;opacity:.035;background-image:radial-gradient(rgba(255,255,255,.4) .7px,transparent .7px);background-size:18px 18px;pointer-events:none}
+  .dropzone-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(circle at center,black 40%,transparent 100%);opacity:.35;pointer-events:none}
+  .drop-particle{position:absolute;width:6px;height:6px;border-radius:50%;background:#4f8ef7;box-shadow:0 0 15px #4f8ef7;opacity:.65;animation:particleFloat 7s linear infinite}
+  @keyframes particleFloat{0%{transform:translateY(70px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(-420px);opacity:0}}
+  .ambient-light{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(79,142,247,.18),transparent 70%);filter:blur(40px);animation:floatGlow 8s ease-in-out infinite;pointer-events:none}
+  @keyframes floatGlow{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.08)}}
+  .upload-badge{display:inline-flex;align-items:center;padding:8px 18px;border-radius:999px;background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.28);font-size:11px;font-weight:700;letter-spacing:2px;color:#7db4ff;margin-bottom:26px;box-shadow:0 0 30px rgba(79,142,247,.18)}
+  .upload-title{font-size:46px;font-weight:800;line-height:1.8;text-align:center;color:rgba(255,255,255,.62);margin-bottom:34px}
+  .upload-subtitle{max-width:560px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.62);text-align:center;margin-bottom:32px}
+  .dropzone .btn{height:56px;padding:0 34px;border-radius:16px;font-size:15px;font-weight:600;background:linear-gradient(135deg,#0357e9,#7a5cff);border:none;box-shadow:0 15px 35px rgba(79,142,247,.28);transition:.35s}
+  .dropzone .btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 20px 45px rgba(79,142,247,.45)}
+  .dropzone-lung{width:80px;height:80px;margin:0 auto 20px;position:relative}
+  .dropzone-lung svg{filter:drop-shadow(0 0 12px rgba(79,142,247,0.5));animation:lung-breathe 3s ease-in-out infinite}
+  .dropzone-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px}
+  .dropzone-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .dropzone-formats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+  .fmt-tag{padding:3px 12px;border-radius:999px;font-size:10px;font-weight:600;background:rgba(79,142,247,0.1);color:#4f8ef7;border:1px solid rgba(79,142,247,0.2)}
+
+  /* Preview */
+  .preview-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden}
+  .preview-header{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
+  .preview-header-title{font-size:13px;font-weight:600;color:#fff}
+  .preview-body{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}
+  .preview-img-wrap{border-radius:10px;overflow:hidden;background:#000;position:relative;aspect-ratio:1}
+  .preview-img{width:100%;height:100%;object-fit:contain}
+  .preview-scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#4f8ef7,transparent);animation:scan-move 2s linear infinite}
+  @keyframes scan-move{0%{top:0%}100%{top:100%}}
+  .preview-meta{display:flex;flex-direction:column;gap:10px}
+  .meta-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+  .meta-label{font-size:11px;color:rgba(255,255,255,0.4)}
+  .meta-value{font-size:12px;color:#fff;font-weight:500;text-align:right;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .checks-row{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .check-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#00d4aa}
+  .check-item i{font-size:11px}
+
+  /* Progress Steps */
+  .progress-steps{display:flex;align-items:center;gap:0}
+  .prog-step{flex:1;text-align:center;position:relative}
+  .prog-step-circle{width:28px;height:28px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);transition:all 0.3s}
+  .prog-step.active .prog-step-circle{background:rgba(79,142,247,0.2);border-color:#4f8ef7;color:#4f8ef7}
+  .prog-step.done .prog-step-circle{background:rgba(0,212,170,0.2);border-color:#00d4aa;color:#00d4aa}
+  .prog-step-label{font-size:10px;color:rgba(255,255,255,0.4)}
+  .prog-step.active .prog-step-label{color:#4f8ef7}
+  .prog-step.done .prog-step-label{color:#00d4aa}
+  .prog-connector{height:1px;background:rgba(255,255,255,0.08);flex-shrink:0;width:30px;margin-bottom:22px}
+  .prog-connector.done{background:#00d4aa}
+
+  /* Loading */
+  .loading-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:40px;text-align:center}
+  .spinner-ring{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,0.06);border-top:3px solid #4f8ef7;border-right:3px solid #00d4aa;animation:spin 1s linear infinite;margin:0 auto 20px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-steps-list{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+  .loading-step-pill{padding:6px 14px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.03);display:flex;align-items:center;gap:6px;transition:all 0.3s}
+  .loading-step-pill.active{color:#4f8ef7;border-color:rgba(79,142,247,0.3);background:rgba(79,142,247,0.1)}
+  .loading-step-pill.done{color:#00d4aa;border-color:rgba(0,212,170,0.3);background:rgba(0,212,170,0.08)}
+  .loading-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+  .loading-step-pill.active .loading-dot{animation:pulse 1s infinite}
+
+  /* Result quick card */
+  .result-quick{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;animation:fade-up 0.5s ease both}
+  .result-quick-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
+  .result-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600}
+
+  /* Sidebar cards */
+  .sidebar-info-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px}
+  .info-title{font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .info-list{display:flex;flex-direction:column;gap:10px}
+  .info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:8px}
+  .info-key{font-size:11px;color:rgba(255,255,255,0.4)}
+  .info-val{font-size:12px;font-weight:600;color:#fff}
+
+  /* Error */
+  .error-card{background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.2);border-radius:14px;padding:28px;text-align:center;animation:fade-up 0.4s ease both}
+
+  .d-none{display:none!important}
+  .w-full{width:100%}
+</style>
+
+<div class="page-title fade-up">Upload Chest X-Ray</div>
+<div class="page-sub fade-up-2">Upload a chest X-ray image for AI analysis</div>
+
+<div class="upload-layout">
+
+  <!-- MAIN COLUMN -->
+  <div class="upload-main-col">
+
+    <!-- Drop Zone -->
+    <form id="uploadForm" novalidate>
+        <!-- Patient Info Card -->
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:20px; margin-bottom:16px; display:flex; flex-direction:column; gap:12px;">
+          <div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Patient Information</div>
+          <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:12px;">
+            <div>
+              <label class="input-label" style="font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:4px;">Patient Name</label>
+              <input type="text" id="patientNameInput" name="patient_name" class="input-field" placeholder="e.g. John Doe" value="Anonymous" required style="padding:8px 12px; font-size:12px; height:36px;" />
+            </div>
+            <div>
+              <label class="input-label" style="font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:4px;">Age</label>
+              <input type="number" id="patientAgeInput" name="patient_age" class="input-field" placeholder="Age" value="0" min="0" max="150" required style="padding:8px 12px; font-size:12px; height:36px;" />
+            </div>
+            <div>
+              <label class="input-label" style="font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:4px;">Gender</label>
+              <select id="patientGenderInput" name="patient_gender" class="input-field" style="padding:8px 12px; font-size:12px; height:36px; cursor:pointer; background:#0d1228;">
+                <option value="Male" style="background:#0d1228;">Male</option>
+                <option value="Female" style="background:#0d1228;">Female</option>
+                <option value="Other" style="background:#0d1228;">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="dropZone" class="dropzone fade-up-2" tabindex="0" role="region" aria-label="Upload zone">
+          <div class="ambient-light"></div>
+          <div class="dropzone-lung">
+            <svg viewBox="0 0 120 110" fill="none" width="80" height="80">
+              <defs>
+                <linearGradient id="dlg" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#4f8ef7"/>
+                  <stop offset="100%" stop-color="#00d4aa"/>
+                </linearGradient>
+              </defs>
+              <path d="M60 14C60 14 53 8 44 8C33 8 24 18 24 32C24 50 27 68 21 80C15 92 9 98 14 101C19 104 28 96 34 84C37 78 39 66 42 56C45 46 48 36 51 28C53 22 56 18 58 15" stroke="url(#dlg)" stroke-width="2.5" stroke-linecap="round" fill="rgba(79,142,247,0.05)"/>
+              <path d="M60 14C60 14 67 8 76 8C87 8 96 18 96 32C96 50 93 68 99 80C105 92 111 98 106 101C101 104 92 96 86 84C83 78 81 66 78 56C75 46 72 36 69 28C67 22 64 18 62 15" stroke="url(#dlg)" stroke-width="2.5" stroke-linecap="round" fill="rgba(124,92,191,0.05)"/>
+              <line x1="60" y1="14" x2="60" y2="96" stroke="url(#dlg)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="upload-badge">AI POWERED DETECTION</div>
+           <div class="upload-title">Upload Chest X-Ray</div>
+           <div class="upload-subtitle">Drop a chest radiograph to begin real-time AI analysis using DenseNet-121.</div>
+          <button type="button" class="btn btn-ghost" onclick="document.getElementById('fileInput').click()">
+            <i class="fas fa-folder-upload-alt"></i> Browse Files
+          </button>
+          <input type="file" id="fileInput" name="file" class="d-none" accept=".png,.jpg,.jpeg"/>
+          <div class="dropzone-formats">
+            <span class="fmt-tag">JPG</span>
+            <span class="fmt-tag">PNG</span>
+            <span class="fmt-tag">JPEG</span>
+            <span class="fmt-tag">Max 25MB</span>
+          </div>
+        </div>
+      </form>
+
+    <!-- Preview -->
+    <div id="previewSection" class="preview-card d-none">
+      <div class="preview-header">
+        <div class="preview-header-title"><i class="fas fa-image" style="color:#4f8ef7;margin-right:8px"></i>Image Preview</div>
+        <button id="removeImageBtn" style="background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.2);border-radius:6px;padding:5px 10px;color:#ff4757;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px">
+          <i class="fas fa-xmark"></i> Remove
+        </button>
+      </div>
+      <div class="preview-body">
+        <div class="preview-img-wrap">
+          <img id="previewImage" class="preview-img" alt="Preview"/>
+          <div class="preview-scan-line"></div>
+        </div>
+        <div class="preview-meta">
+          <div class="meta-row"><span class="meta-label">File Name</span><span class="meta-value" id="detailFileName">—</span></div>
+          <div class="meta-row"><span class="meta-label">File Size</span><span class="meta-value" id="detailFileSize">—</span></div>
+          <div class="meta-row"><span class="meta-label">Dimensions</span><span class="meta-value" id="detailDimensions">—</span></div>
+          <div class="meta-row"><span class="meta-label">Format</span><span class="meta-value" id="detailFileType">—</span></div>
+          <div class="checks-row">
+            <div class="check-item"><i class="fas fa-check-circle"></i> Format valid</div>
+            <div class="check-item"><i class="fas fa-check-circle"></i> Size acceptable</div>
+            <div class="check-item"><i class="fas fa-check-circle"></i> Ready for analysis</div>
+          </div>
+          <button type="button" id="analyzeBtn" class="btn btn-primary w-full" style="margin-top:8px">
+            <i class="fas fa-microchip"></i> Analyze with AI
+          </button>
+          <button type="button" id="changeImageBtn" class="btn btn-ghost w-full" style="margin-top:6px">
+            <i class="fas fa-arrows-rotate"></i> Change Image
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loadingSection" class="loading-card d-none">
+      <div class="spinner-ring"></div>
+      <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:6px" id="analysisLabel">Analyzing Chest X-Ray…</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">This usually takes 10–15 seconds</div>
+      <div class="loading-steps-list">
+        <div class="loading-step-pill active" id="lstep1"><div class="loading-dot"></div>Uploading</div>
+        <div class="loading-step-pill" id="lstep2"><div class="loading-dot"></div>Processing</div>
+        <div class="loading-step-pill" id="lstep3"><div class="loading-dot"></div>Analyzing</div>
+        <div class="loading-step-pill" id="lstep4"><div class="loading-dot"></div>Finalizing</div>
+      </div>
+      <!-- Progress bar -->
+      <div style="margin-top:20px">
+        <div class="progress" style="height:4px">
+          <div class="progress-fill" id="analysisProgressFill" style="width:0%;transition:width 0.5s ease"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.3);margin-top:6px">
+          <span>Uploading</span><span>Processing</span><span>Analyzing</span><span>Finalizing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result quick view -->
+    <div id="resultSection" class="result-quick d-none">
+      <div class="result-quick-header">
+        <div style="font-size:13px;font-weight:600;color:#fff">Prediction Result</div>
+        <span class="badge badge-blue"><i class="fas fa-check"></i> Complete</span>
+      </div>
+      <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Diagnosis</div>
+          <div id="predictionStatus" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:16px;font-weight:700;background:rgba(0,212,170,0.12);color:#00d4aa;border:1px solid rgba(0,212,170,0.25)">
+            <i class="fas fa-check-circle"></i>
+            <span id="predictionValue">—</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Confidence</div>
+          <div style="font-size:28px;font-weight:700;color:#fff;line-height:1;margin-bottom:8px"><span id="confidencePercent">—</span>%</div>
+          <div class="progress"><div class="progress-fill" id="confidenceFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div style="padding:0 20px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div style="padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.05)">
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Prediction</div>
+          <div style="font-size:13px;font-weight:600;color:#fff" id="detailPrediction">—</div>
+        </div>
+        <div style="padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.05)">
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Confidence</div>
+          <div style="font-size:13px;font-weight:600;color:#4f8ef7" id="detailConfidence">—</div>
+        </div>
+        <div style="padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.05)">
+          <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Time</div>
+          <div style="font-size:13px;font-weight:600;color:#fff" id="detailTime">—</div>
+        </div>
+      </div>
+      <div style="padding:0 20px 20px;display:flex;gap:10px">
+        <button id="newAnalysisBtn" class="btn btn-ghost" style="flex:1"><i class="fas fa-plus"></i> New Analysis</button>
+        <a href="/results" class="btn btn-primary" style="flex:1;justify-content:center"><i class="fas fa-chart-pie"></i> Full Report</a>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div id="errorSection" class="error-card d-none">
+      <i class="fas fa-triangle-exclamation" style="font-size:32px;color:#ff4757;margin-bottom:12px"></i>
+      <div style="font-size:15px;font-weight:600;color:#ff4757;margin-bottom:8px">Analysis Failed</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px" id="errorMessage">An error occurred. Please try again.</div>
+      <button id="errorRetryBtn" class="btn btn-ghost"><i class="fas fa-rotate-right"></i> Try Again</button>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="upload-sidebar-col fade-up-3">
+
+    <!-- How it works -->
+    <div class="sidebar-info-card">
+      <div class="info-title">How It Works</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);color:#4f8ef7;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;padding-top:3px">Upload your chest X-ray image (PNG/JPG)</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);color:#4f8ef7;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;padding-top:3px">AI preprocesses image at 224×224px</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);color:#4f8ef7;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;padding-top:3px">DenseNet-121 runs inference</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);color:#4f8ef7;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;padding-top:3px">Get prediction + Grad-CAM report</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model Info -->
+    <div class="sidebar-info-card">
+      <div class="info-title">Model Details</div>
+      <div class="info-list">
+        <div class="info-row"><span class="info-key">Architecture</span><span class="info-val">DenseNet-121</span></div>
+        <div class="info-row"><span class="info-key">Accuracy</span><span class="info-val" style="color:#00d4aa">95.4%</span></div>
+        <div class="info-row"><span class="info-key">Precision</span><span class="info-val" style="color:#00d4aa">98.8%</span></div>
+        <div class="info-row"><span class="info-key">Input Size</span><span class="info-val">224 × 224</span></div>
+        <div class="info-row"><span class="info-key">Avg Time</span><span class="info-val">~11 sec</span></div>
+        <div class="info-row"><span class="info-key">Version</span><span class="info-val">v2.4.0</span></div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div style="background:rgba(240,160,96,0.08);border:1px solid rgba(240,160,96,0.2);border-radius:10px;padding:14px">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <i class="fas fa-triangle-exclamation" style="color:#f0a060;margin-top:1px;flex-shrink:0"></i>
+        <p style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6">For informational use only. Always consult a qualified radiologist for clinical decisions.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/upload-modern.js') }}"></script>
+<script>
+window.__setLoadingStep=function(step,pct){
+  document.querySelectorAll('.loading-step-pill').forEach((el,i)=>{
+    el.classList.toggle('active',i===step-1);
+    el.classList.toggle('done',i<step-1);
+  });
+  const bar=document.getElementById('analysisProgressFill');
+  if(bar) bar.style.width=pct+'%';
+};
+</script>
+{% endblock %}

@@ -1,0 +1,259 @@
+/* =========================================
+   PROFILE PAGE - PNEUMOAI
+========================================= */
+
+.profile-page {
+    padding: 20px;
+    color: #fff;
+}
+
+/* ================= HEADER ================= */
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-title {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.profile-subtitle {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.profile-actions .btn {
+    padding: 8px 14px;
+}
+
+/* ================= GRID ================= */
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+}
+
+/* ================= SIDEBAR ================= */
+
+.profile-sidebar {
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.avatar-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(45deg, #00d4ff, #6a5acd);
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-status {
+    margin: 10px 0;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+/* ================= MAIN ================= */
+
+.profile-main {
+    padding: 20px;
+    border-radius: 16px;
+}
+
+/* ================= FORM ================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.form-group label {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    outline: none;
+}
+
+.profile-footer {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* ================= CARDS ================= */
+
+.profile-card {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+}
+
+/* ================= SECURITY ================= */
+
+.security-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.security-item {
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+}
+
+/* ================= ACCOUNT GRID ================= */
+
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.account-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+}
+
+/* ================= STATS ================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.stat-card {
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    background: rgba(255,255,255,0.04);
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ================= ACTIVITY ================= */
+
+.activity-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.action-card {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-card {
+    width: 400px;
+    background: #111;
+    padding: 20px;
+    border-radius: 14px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .security-grid {
+        grid-template-columns: 1fr;
+    }
+}

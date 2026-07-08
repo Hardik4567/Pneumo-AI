@@ -1,0 +1,217 @@
+/* ==========================================================================
+   PNEUMOAI — PREDICTION RESULTS PAGE STYLESHEET
+   Clinical light-theme results style | Version 1.0
+   ========================================================================== */
+
+:root {
+  --med-blue:          #0284c7;
+  --med-blue-dk:       #0369a1;
+  --med-blue-lt:       #38bdf8;
+  --med-bg:            #f8fafc;
+  --med-white:         #ffffff;
+  --med-gray:          #475569;
+  --med-gray-lt:       #64748b;
+  --med-gray-ghost:    #e2e8f0;
+  
+  --med-success:       #16a34a;
+  --med-success-bg:    #dcfce7;
+  --med-success-border:#bbf7d0;
+  
+  --med-danger:        #dc2626;
+  --med-danger-bg:     #fee2e2;
+  --med-danger-border: #fecaca;
+  
+  --med-warning:       #d97706;
+  --med-warning-bg:    #fef3c7;
+  --med-warning-border:#fde68a;
+  
+  --med-shadow:        0 10px 30px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+  --med-shadow-hover:  0 20px 40px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.02);
+  --med-radius:        16px;
+  --med-radius-sm:     10px;
+}
+
+body {
+  background-color: var(--med-bg);
+  color: var(--med-text-dark);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Page background layout */
+.pneumo-results {
+  position: relative;
+  z-index: 1;
+}
+
+.pneumo-results__title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Prediction layout components */
+.prediction-box {
+  background: #fff;
+  border-radius: var(--med-radius-sm);
+  padding: 1.5rem;
+  border-left: 5px solid var(--med-blue);
+  box-shadow: var(--med-shadow);
+  transition: all 0.2s ease;
+}
+
+.prediction-box.border-primary {
+  border-left-color: var(--med-blue) !important;
+}
+
+/* Color coded diagnosis classes */
+.text-success {
+  color: var(--med-success) !important;
+}
+
+.text-danger {
+  color: var(--med-danger) !important;
+}
+
+.confidence-box {
+  background: #fff;
+  border-radius: var(--med-radius-sm);
+  padding: 1.5rem;
+  border-left: 5px solid var(--med-success);
+  box-shadow: var(--med-shadow);
+  transition: all 0.2s ease;
+}
+
+.confidence-box.border-success {
+  border-left-color: var(--med-success) !important;
+}
+
+/* Progress bar inside card */
+.progress {
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 8px;
+}
+
+.progress-bar {
+  border-radius: 9999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bg-success {
+  background-color: var(--med-success) !important;
+}
+
+.bg-danger {
+  background-color: var(--med-danger) !important;
+}
+
+.bg-warning {
+  background-color: var(--med-warning) !important;
+}
+
+/* Grad-CAM Heatmap container styling */
+#gradcamVisualization {
+  border: 1px solid var(--med-gray-ghost);
+  border-radius: var(--med-radius-sm);
+  box-shadow: var(--med-shadow);
+  background: #000;
+  padding: 4px;
+  max-width: 100%;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid rgba(2, 132, 199, 0.06) !important;
+  border-radius: var(--med-radius) !important;
+  box-shadow: var(--med-shadow) !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--med-shadow-hover) !important;
+}
+
+.card-header {
+  border-bottom: 1px solid rgba(2, 132, 199, 0.06) !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.card-header.bg-primary { background-color: var(--med-blue) !important; color: white !important; }
+.card-header.bg-info { background-color: #0891b2 !important; color: white !important; }
+.card-header.bg-warning { background-color: var(--med-warning) !important; color: white !important; }
+.card-header.bg-dark { background-color: #0f172a !important; color: white !important; }
+.card-header.bg-secondary { background-color: #475569 !important; color: white !important; }
+
+/* Disclaimer alert styling */
+.alert-warning {
+  background-color: var(--med-warning-bg) !important;
+  border-color: var(--med-warning-border) !important;
+  color: #92400e !important;
+  border-radius: var(--med-radius-sm) !important;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.alert-danger {
+  background-color: var(--med-danger-bg) !important;
+  border-color: var(--med-danger-border) !important;
+  color: #991b1b !important;
+  border-radius: var(--med-radius-sm) !important;
+  font-size: 0.88rem;
+}
+
+.alert-success {
+  background-color: var(--med-success-bg) !important;
+  border-color: var(--med-success-border) !important;
+  color: #166534 !important;
+  border-radius: var(--med-radius-sm) !important;
+  font-size: 0.88rem;
+}
+
+/* Buttons style override */
+.btn-primary {
+  background-color: var(--med-blue) !important;
+  border-color: var(--med-blue) !important;
+  border-radius: var(--med-radius-sm) !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--med-blue-dk) !important;
+  border-color: var(--med-blue-dk) !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  border-color: var(--med-gray-ghost) !important;
+  border-radius: var(--med-radius-sm) !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--med-gray) !important;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--med-bg) !important;
+  color: var(--med-blue) !important;
+}
+
+.btn-outline-info {
+  border-color: #cbd5e1 !important;
+  border-radius: var(--med-radius-sm) !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #0891b2 !important;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-info:hover {
+  background-color: #ecfeff !important;
+}

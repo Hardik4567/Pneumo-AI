@@ -1,0 +1,186 @@
+<footer class="pneumo-footer bg-dark text-light pt-5 pb-4" role="contentinfo" aria-label="Global Site Footer">
+    <div class="container">
+        
+        <div class="row g-4 mb-5">
+            
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="pneumo-footer__brand-wrapper mb-3">
+                    <a class="pneumo-footer__logo d-flex align-items-center text-decoration-none text-light" 
+                       href="{{ url_for('home') }}" 
+                       aria-label="PneumoAI Homepage">
+                        <img src="{{ url_for('static', filename='images/logo-light.png') }}" 
+                             alt="" 
+                             class="pneumo-footer__logo-img me-2"
+                             width="32" 
+                             height="32"
+                             aria-hidden="true">
+                        <span class="pneumo-footer__logo-text h4 mb-0 fw-bold">Pneumo<span class="text-primary">AI</span></span>
+                    </a>
+                </div>
+                <p class="pneumo-footer__description text-muted small pe-lg-4">
+                    Empowering clinical decision-making with state-of-the-art deep learning architectures. PneumoAI delivers near-instantaneous screening insights for chest radiographs with industry-leading diagnostic precision.
+                </p>
+                <nav class="pneumo-footer__socials mt-3" aria-label="PneumoAI Social Media Links">
+                    <ul class="list-unstyled d-flex gap-3 mb-0" role="list">
+                        <li role="listitem">
+                            <a href="https://github.com" class="pneumo-footer__social-link text-muted" target="_blank" rel="noopener noreferrer" aria-label="Follow PneumoAI on GitHub">
+                                <i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li role="listitem">
+                            <a href="https://linkedin.com" class="pneumo-footer__social-link text-muted" target="_blank" rel="noopener noreferrer" aria-label="Connect with PneumoAI on LinkedIn">
+                                <i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li role="listitem">
+                            <a href="https://x.com" class="pneumo-footer__social-link text-muted" target="_blank" rel="noopener noreferrer" aria-label="Follow PneumoAI on X (formerly Twitter)">
+                                <i class="fa-brands fa-x-twitter fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li role="listitem">
+                            <a href="https://instagram.com" class="pneumo-footer__social-link text-muted" target="_blank" rel="noopener noreferrer" aria-label="Follow PneumoAI on Instagram">
+                                <i class="fa-brands fa-instagram fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li role="listitem">
+                            <a href="https://youtube.com" class="pneumo-footer__social-link text-muted" target="_blank" rel="noopener noreferrer" aria-label="Watch PneumoAI on YouTube">
+                                <i class="fa-brands fa-youtube fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <h2 class="pneumo-footer__heading h6 text-uppercase fw-bold text-muted mb-3 tracking-wider">Navigation</h2>
+                <ul class="pneumo-footer__links list-unstyled small" role="list">
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Home</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Upload Console</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Patient History</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">About Project</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Contact Support</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <h2 class="pneumo-footer__heading h6 text-uppercase fw-bold text-muted mb-3 tracking-wider">Features</h2>
+                <ul class="pneumo-footer__links list-unstyled small" role="list">
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">X-Ray Classification</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Heatmap Generation</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">DICOM Parsing</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Batch Analysis</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">API Access</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-sm-4 col-md-6 col-lg-2">
+                <h2 class="pneumo-footer__heading h6 text-uppercase fw-bold text-muted mb-3 tracking-wider">Resources</h2>
+                <ul class="pneumo-footer__links list-unstyled small" role="list">
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Model Whitepaper</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Developer Docs</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Clinical Datasets</a>
+                    </li>
+                    <li class="mb-2" role="listitem">
+                        <a href="{{ url_for('home') }}" class="pneumo-footer__link text-muted text-decoration-none">Security Compliance</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-sm-12 col-md-6 col-lg-2">
+                <h2 class="pneumo-footer__heading h6 text-uppercase fw-bold text-muted mb-3 tracking-wider">Contact</h2>
+                <ul class="pneumo-footer__contact-list list-unstyled small text-muted" aria-label="Corporate Contact Information">
+                    <li class="mb-2 d-flex align-items-start">
+                        <i class="fa-solid fa-envelope mt-1 me-2 text-primary" aria-hidden="true"></i>
+                        <span>support@pneumoai.med</span>
+                    </li>
+                    <li class="mb-2 d-flex align-items-start">
+                        <i class="fa-solid fa-phone mt-1 me-2 text-primary" aria-hidden="true"></i>
+                        <span>+1 (555) 019-2831</span>
+                    </li>
+                    <li class="mb-2 d-flex align-items-start">
+                        <i class="fa-solid fa-location-dot mt-1 me-2 text-primary" aria-hidden="true"></i>
+                        <span>Medical AI Innovation Hub, Suite 400, San Francisco, CA</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="pneumo-footer__stats border-top border-secondary py-4" aria-label="System Performance Validation Overview">
+            <div class="row g-3 text-center">
+                <div class="col-12 col-sm-4">
+                    <div class="pneumo-footer__stat-item">
+                        <span class="pneumo-footer__stat-value d-block h3 mb-0 fw-bold text-primary">95.4%</span>
+                        <small class="pneumo-footer__stat-label text-uppercase text-muted tracking-wide fw-medium">Validation Accuracy</small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <div class="pneumo-footer__stat-item">
+                        <span class="pneumo-footer__stat-value d-block h3 mb-0 fw-bold text-success">&lt; 2.0s</span>
+                        <small class="pneumo-footer__stat-label text-uppercase text-muted tracking-wide fw-medium">Inference Latency</small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                    <div class="pneumo-footer__stat-item">
+                        <span class="pneumo-footer__stat-value d-block h3 mb-0 fw-bold text-info">50K+</span>
+                        <small class="pneumo-footer__stat-label text-uppercase text-muted tracking-wide fw-medium">Clinical Images Tested</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pneumo-footer__legal border-top border-secondary pt-4">
+            <div class="row align-items-center g-3">
+                
+                <div class="col-12 col-md-6 text-center text-md-start">
+                    <p class="pneumo-footer__copyright mb-0 text-muted small">
+                        &copy; {{ current_year or 2026 }} <span class="text-light fw-medium">PneumoAI Inc.</span> All global laboratory analytics rights reserved.
+                    </p>
+                </div>
+                
+                <div class="col-12 col-md-6 text-center text-md-end">
+                    <nav class="pneumo-footer__legal-nav d-inline-block" aria-label="Legal and Privacy Policies Agreements">
+                        <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-end gap-3 mb-0 small" role="list">
+                            <li role="listitem">
+                                <a href="{{ url_for('home') }}" class="pneumo-footer__legal-link text-muted text-decoration-none">Privacy Policy</a>
+                            </li>
+                            <li role="listitem">
+                                <a href="{{ url_for('home') }}" class="pneumo-footer__legal-link text-muted text-decoration-none">Terms of Service</a>
+                            </li>
+                            <li role="listitem">
+                                <a href="{{ url_for('home') }}" class="pneumo-footer__legal-link text-muted text-decoration-none">Cookie Settings</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</footer>

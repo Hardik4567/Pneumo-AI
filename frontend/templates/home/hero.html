@@ -1,0 +1,151 @@
+<section id="hero" class="pnm-hero position-relative overflow-hidden w-100 d-flex align-items-center bg-dark text-white min-vh-100 py-5" aria-labelledby="hero-display-heading">
+    
+    <div id="heroParticles" class="pnm-hero__particles position-absolute top-0 start-0 w-100 h-100 pointer-events-none" aria-hidden="true">
+        <div class="pnm-hero__glow-blob pnm-hero__glow-blob--primary position-absolute rounded-circle mix-blend-screen filter-blur"></div>
+        <div class="pnm-hero__glow-blob pnm-hero__glow-blob--secondary position-absolute rounded-circle mix-blend-screen filter-blur"></div>
+        <div class="pnm-hero__animated-circle pnm-hero__animated-circle--1 position-absolute border rounded-circle opacity-10"></div>
+        <div class="pnm-hero__animated-circle pnm-hero__animated-circle--2 position-absolute border rounded-circle opacity-5"></div>
+    </div>
+
+    <div class="container position-relative pnm-hero__content-wrapper" id="heroContent" style="z-index: 2;">
+        <div class="row align-items-center g-5">
+            
+            <div class="col-12 col-lg-6">
+                <header class="pnm-hero__text-block">
+                    
+                    <div class="pnm-hero__badge-container mb-3 d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-primary bg-opacity-10 border border-primary border-opacity-25">
+                        <i class="fa-solid fa-brain text-primary" aria-hidden="true"></i>
+                        <span class="pnm-hero__badge-text text-primary text-uppercase font-mono tracking-wider fw-bold" style="font-size: 11px;">
+                            Enterprise Clinical Intelligence
+                        </span>
+                    </div>
+
+                    <h1 id="hero-display-heading" class="pnm-hero__heading display-4 fw-extrabold font-poppins text-white mb-3 tracking-tight lh-1">
+                        Next-Gen Lung Analysis Driven By <span class="pnm-hero__gradient-text bg-gradient-to-r from-primary to-info text-transparent bg-clip-text">Advanced Medical AI</span>
+                    </h1>
+
+                    <p class="pnm-hero__paragraph text-muted fs-5 mb-4 fw-normal lh-base">
+                        Empower radiological diagnostics with high-veracity deep learning metrics. Utilizing an optimized DenseNet-121 architecture framework, PneumoAI yields critical diagnostic probability readouts paired with transparent Grad-CAM localization maps in under two seconds.
+                    </p>
+
+                </header>
+
+                <div class="pnm-hero__ctas d-flex flex-wrap gap-3 mb-5">
+                    <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg px-4 py-3 fs-6 fw-bold shadow d-inline-flex align-items-center gap-2 font-poppins" role="button" aria-label="Navigate to the diagnostic X-Ray upload console workspace">
+                        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Analyze X-ray Specimen
+                    </a>
+                    <a href="#features" class="btn btn-outline-light btn-lg px-4 py-3 fs-6 fw-semibold d-inline-flex align-items-center gap-2 font-poppins" role="button">
+                        Discover Engineering Parameters
+                    </a>
+                </div>
+
+                <div id="heroStats" class="pnm-hero__stats row g-3 mb-5" aria-label="System Validation Benchmarks">
+                    
+                    <div class="col-6 col-sm-3">
+                        <div class="pnm-hero-stat card bg-transparent border-0">
+                            <span class="pnm-hero-stat__value d-block h2 fw-bold font-mono text-primary mb-0">95.4%</span>
+                            <span class="pnm-hero-stat__label text-uppercase text-muted tracking-wider font-mono d-block" style="font-size: 10px;">Validation AUC</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-sm-3">
+                        <div class="pnm-hero-stat card bg-transparent border-0">
+                            <span class="pnm-hero-stat__value d-block h2 fw-bold font-mono text-success mb-0">&lt; 2.0s</span>
+                            <span class="pnm-hero-stat__label text-uppercase text-muted tracking-wider font-mono d-block" style="font-size: 10px;">Inference Latency</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-sm-3">
+                        <div class="pnm-hero-stat card bg-transparent border-0">
+                            <span class="pnm-hero-stat__value d-block h2 fw-bold font-mono text-info mb-0">50K+</span>
+                            <span class="pnm-hero-stat__label text-uppercase text-muted tracking-wider font-mono d-block" style="font-size: 10px;">Images Tested</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-sm-3">
+                        <div class="pnm-hero-stat card bg-transparent border-0">
+                            <span class="pnm-hero-stat__value d-block h2 fw-bold font-mono text-warning mb-0">Grad-CAM</span>
+                            <span class="pnm-hero-stat__label text-uppercase text-muted tracking-wider font-mono d-block" style="font-size: 10px;">Explainable AI</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pnm-hero__trust border-top border-secondary border-opacity-25 pt-4">
+                    <span class="pnm-hero__trust-title d-block text-uppercase text-muted tracking-widest font-mono mb-3" style="font-size: 10px;">Engine Compliance Parameters</span>
+                    <div class="pnm-hero__trust-badges d-flex flex-wrap gap-4 align-items-center opacity-75">
+                        <div class="pnm-hero-trust-badge d-flex align-items-center gap-2 small text-muted" title="Medical AI Certified Core Pipeline">
+                            <i class="fa-solid fa-laptop-medical text-primary" aria-hidden="true"></i> <span class="font-poppins fw-medium">Medical AI Core</span>
+                        </div>
+                        <div class="pnm-hero-trust-badge d-flex align-items-center gap-2 small text-muted" title="DenseNet-121 Layer Array Model">
+                            <i class="fa-solid fa-network-wired text-success" aria-hidden="true"></i> <span class="font-mono">DenseNet121</span>
+                        </div>
+                        <div class="pnm-hero-trust-badge d-flex align-items-center gap-2 small text-muted" title="Anonymized Pipeline Sandbox Architecture">
+                            <i class="fa-solid fa-shield-halved text-info" aria-hidden="true"></i> <span class="font-poppins fw-medium">Secure Partitioning</span>
+                        </div>
+                        <div class="pnm-hero-trust-badge d-flex align-items-center gap-2 small text-muted" title="Real-time GPU Distributed Clusters Processing">
+                            <i class="fa-solid fa-bolt text-warning" aria-hidden="true"></i> <span class="font-poppins fw-medium">Real-time Node</span>
+                        </div>
+                        <div class="pnm-hero-trust-badge d-flex align-items-center gap-2 small text-muted" title="HIPAA Privacy Standards Preserved Framework Architecture Layer Ready">
+                            <i class="fa-solid fa-file-shield text-danger" aria-hidden="true"></i> <span class="font-mono fw-bold">HIPAA Compliant</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center position-relative">
+                <div id="heroImageWrapper" class="pnm-hero__image-wrapper position-relative w-100 px-md-4">
+                    
+                    <figure id="heroImage" class="pnm-hero__figure m-0 rounded-4 overflow-hidden shadow-2xl border border-secondary border-opacity-25 bg-dark">
+                        <img src="{{ url_for('static', filename='images/hero-diagnostic-preview.jpg') }}" alt="Radiological medical professional utilizing the interactive PneumoAI neural workspace interface configuration display" class="pnm-hero__img img-fluid w-100 h-100 object-fit-cover opacity-85" style="min-height: 440px;">
+                    </figure>
+
+                    <div class="pnm-hero-float pnm-hero-float--prediction position-absolute card backdrop-blur border border-white border-opacity-10 bg-dark bg-opacity-60 shadow rounded-3 p-3 animate-float-slow" style="top: 10%; left: -5%; max-width: 220px;">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <div class="bg-danger bg-opacity-20 text-danger rounded-circle d-flex align-items-center justify-content-center p-2" style="width: 28px; height: 28px;">
+                                <i class="fa-solid fa-triangle-exclamation sm" aria-hidden="true"></i>
+                            </div>
+                            <span class="text-uppercase text-muted tracking-wider font-mono" style="font-size: 10px;">Pathology Assessment</span>
+                        </div>
+                        <h2 class="h6 font-poppins fw-bold text-white mb-0">Pneumonia Detected</h2>
+                    </div>
+
+                    <div class="pnm-hero-float pnm-hero-float--confidence position-absolute card backdrop-blur border border-white border-opacity-10 bg-dark bg-opacity-60 shadow rounded-3 p-3 animate-float-delayed" style="bottom: 15%; right: -5%; min-width: 180px;">
+                        <span class="text-uppercase text-muted tracking-wider font-mono d-block mb-1" style="font-size: 10px;">Certainty Probability</span>
+                        <div class="d-flex align-items-baseline gap-1">
+                            <span class="h3 fw-bold font-mono text-primary mb-0">98.4%</span>
+                            <span class="text-success small fw-semibold"><i class="fa-solid fa-circle-arrow-up"></i> High</span>
+                        </div>
+                        <div class="progress rounded-pill bg-secondary bg-opacity-30 mt-2" style="height: 4px;" aria-hidden="true">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 98.4%;" aria-valuenow="98.4" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div class="pnm-hero-float pnm-hero-float--gradcam position-absolute card backdrop-blur border border-white border-opacity-10 bg-dark bg-opacity-60 shadow rounded-3 p-2.5 animate-float-slow" style="bottom: -5%; left: 10%; max-width: 160px;">
+                        <div class="d-flex align-items-center gap-2 small text-muted font-poppins fw-medium">
+                            <i class="fa-solid fa-eye text-info" aria-hidden="true"></i>
+                            <span class="text-white" style="font-size: 11px;">Grad-CAM Map Active</span>
+                        </div>
+                    </div>
+
+                    <div class="pnm-hero-float pnm-hero-float--secure position-absolute card backdrop-blur border border-white border-opacity-10 bg-dark bg-opacity-60 shadow rounded-circle d-flex align-items-center justify-content-center p-0 animate-pulse-slow" title="Ephemeral data streaming matrix secure pipeline active" style="top: -5%; right: 15%; width: 48px; height: 48px;">
+                        <i class="fa-solid fa-shield-halved text-success fa-lg" aria-hidden="true"></i>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="heroScroll" class="pnm-hero__scroll-indicator position-absolute bottom-0 start-50 translate-middle-x mb-4 text-center pointer-events-none" style="z-index: 2;">
+        <a href="#features" class="text-decoration-none d-flex flex-column align-items-center gap-1 opacity-50 transition-all hover-opacity-100" aria-label="Scroll down to explore core structural parameters">
+            <span class="text-uppercase tracking-widest font-mono text-muted mb-1" style="font-size: 9px;">Explore Platform</span>
+            <div class="pnm-hero__mouse border border-secondary rounded-pill position-relative" style="width: 20px; height: 32px;">
+                <div class="pnm-hero__wheel bg-light rounded-circle position-absolute start-50 translate-middle-x" style="width: 4px; height: 6px; top: 6px;"></div>
+            </div>
+        </a>
+    </div>
+
+</section>

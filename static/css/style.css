@@ -1,0 +1,485 @@
+/* ==========================================================================
+   PNEUMOAI GLOBAL REUSABLE MASTER BASE STYLESHEET (style.css)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. DESIGN TOKENS (CSS CUSTOM PROPERTIES)
+   ========================================================================== */
+:root {
+    /* --- Color Palette --- */
+    --clr-primary: #0284c7;
+    --clr-primary-hover: #0369a1;
+    --clr-primary-subtle: rgba(2, 132, 199, 0.08);
+    --clr-secondary: #475569;
+    --clr-secondary-hover: #334155;
+    --clr-secondary-subtle: rgba(71, 85, 105, 0.08);
+    --clr-success: #16a34a;
+    --clr-success-subtle: rgba(22, 163, 74, 0.08);
+    --clr-danger: #dc2626;
+    --clr-danger-subtle: rgba(220, 38, 38, 0.08);
+    --clr-warning: #ca8a04;
+    --clr-warning-subtle: rgba(202, 138, 4, 0.08);
+    --clr-info: #0891b2;
+    --clr-info-subtle: rgba(8, 145, 178, 0.08);
+    
+    /* --- Neutral Scales --- */
+    --clr-neutral-50: #f8fafc;
+    --clr-neutral-100: #f1f5f9;
+    --clr-neutral-200: #e2e8f0;
+    --clr-neutral-300: #cbd5e1;
+    --clr-neutral-400: #94a3b8;
+    --clr-neutral-600: #475569;
+    --clr-neutral-800: #1e293b;
+    --clr-neutral-950: #0f172a;
+    --clr-white: #ffffff;
+    --clr-black: #000000;
+
+    /* --- Surface & Glassmorphism Defaults --- */
+    --surface-bg: var(--clr-white);
+    --surface-border: var(--clr-neutral-200);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.6);
+
+    /* --- Typography Structural Systems --- */
+    --ff-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --ff-display: 'Poppins', var(--ff-sans);
+    --ff-mono: 'SFMono-Regular', Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* --- Font Sizes (Perfect Fourth Scale) --- */
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.875rem;
+    --fs-base: 1rem;
+    --fs-md: 1.125rem;
+    --fs-lg: 1.25rem;
+    --fs-xl: 1.5rem;
+    --fs-xxl: 2rem;
+    --fs-display-2: 2.5rem;
+    --fs-display-1: 3rem;
+
+    /* --- Font Weights --- */
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
+
+    /* --- Line Heights --- */
+    --lh-none: 1;
+    --lh-tight: 1.25;
+    --lh-snug: 1.375;
+    --lh-base: 1.5;
+    --lh-relaxed: 1.625;
+
+    /* --- Border Radii Scale --- */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 9999px;
+
+    /* --- Layered Box Shadows --- */
+    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+    --shadow-inner: inset 0 2px 4px 0 rgba(15, 23, 42, 0.05);
+
+    /* --- Spacing Layout Scale (8px Grid) --- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+
+    /* --- Dynamic Animation Controls --- */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* --- Rigid Layout Width Z-Index Layers --- */
+    --z-negative: -1;
+    --z-base: 1;
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+
+    /* --- Breakpoint Constraints --- */
+    --width-max-xl: 1280px;
+    --width-max-lg: 1024px;
+    --width-max-md: 768px;
+}
+
+/* Dark Mode preferences disabled to preserve clean medical light mode */
+
+/* ==========================================================================
+   2. MODERN CSS RESET & NORMALIZATION
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+}
+
+body {
+    background-color: var(--clr-neutral-50);
+    color: var(--clr-neutral-800);
+    font-family: var(--ff-sans);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-base);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Block Elements Reset */
+img, video, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   3. GLOBAL TYPOGRAPHY STYLE CONFIGURATIONS
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    color: var(--clr-neutral-950);
+}
+
+h1 { font-size: var(--fs-display-1); letter-spacing: -0.02em; }
+h2 { font-size: var(--fs-xxl); letter-spacing: -0.01em; }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+h5 { font-size: var(--fs-md); }
+h6 { font-size: var(--fs-sm); }
+
+p {
+    margin-bottom: var(--space-4);
+    color: var(--clr-neutral-600);
+}
+
+/* Text Formatting Helpers */
+a {
+    color: var(--clr-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--clr-primary-hover);
+}
+
+blockquote {
+    font-family: var(--ff-display);
+    font-style: italic;
+    border-left: 4px solid var(--clr-primary);
+    padding: var(--space-2) var(--space-4);
+    margin: var(--space-4) 0;
+    background: var(--clr-neutral-100);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+code, pre {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-sm);
+    background-color: var(--clr-neutral-100);
+    border-radius: var(--radius-xs);
+}
+
+code {
+    padding: var(--space-1) var(--space-2);
+    color: var(--clr-danger);
+}
+
+pre {
+    padding: var(--space-4);
+    overflow-x: auto;
+    margin-bottom: var(--space-4);
+}
+
+pre code {
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+}
+
+/* ==========================================================================
+   4. LAYOUT AND STRUCTURAL UTILITIES
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: var(--width-max-xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+}
+
+.section {
+    padding: var(--space-16) 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--space-2);
+    font-size: var(--fs-display-2);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--clr-neutral-400);
+    max-width: 600px;
+    margin: 0 auto var(--space-12) auto;
+}
+
+/* Flexbox Infrastructure Utilities */
+.d-flex { display: flex !important; }
+.flex-column { flex-direction: column !important; }
+.justify-center { justify-content: content !important; justify-content: center !important; }
+.justify-between { justify-content: space-between !important; }
+.align-center { align-items: center !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+
+/* Grid Infrastructure Utilities */
+.d-grid { display: grid !important; }
+.gap-1 { gap: var(--space-1) !important; }
+.gap-2 { gap: var(--space-2) !important; }
+.gap-3 { gap: var(--space-3) !important; }
+.gap-4 { gap: var(--space-4) !important; }
+
+/* Margins & Padding Construction Helpers */
+.m-0 { margin: 0 !important; }
+.mb-1 { margin-bottom: var(--space-1) !important; }
+.mb-2 { margin-bottom: var(--space-2) !important; }
+.mb-3 { margin-bottom: var(--space-3) !important; }
+.mb-4 { margin-bottom: var(--space-4) !important; }
+.p-0 { padding: 0 !important; }
+.p-3 { padding: var(--space-3) !important; }
+.p-4 { padding: var(--space-4) !important; }
+
+/* Text Alignment and Display Elements */
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+.w-100 { width: 100% !important; }
+.h-100 { height: 100% !important; }
+
+/* ==========================================================================
+   5. REUSABLE ATOMIC BUTTON ENGINE
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ff-display);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-base);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    transition: background-color var(--var-transition-base, 250ms), border-color var(--var-transition-base, 250ms), transform var(--var-transition-base, 250ms), box-shadow var(--var-transition-base, 250ms);
+    user-select: none;
+    gap: var(--space-2);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--clr-primary);
+    color: var(--clr-white);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--clr-primary-hover);
+    color: var(--clr-white);
+}
+
+.btn-secondary {
+    background-color: var(--clr-secondary);
+    color: var(--clr-white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--clr-secondary-hover);
+    color: var(--clr-white);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-color: var(--clr-neutral-300);
+    color: var(--clr-neutral-800);
+}
+
+.btn-outline:hover {
+    background-color: var(--clr-neutral-100);
+    border-color: var(--clr-neutral-400);
+}
+
+/* ==========================================================================
+   6. GENERIC CARDS & GLASSMORPHISM MODULES
+   ========================================================================== */
+.card {
+    background-color: var(--surface-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card--elevated:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   7. CORE INTERACTIONS, ACCESS AND ACCESSIBILITY TIMELINE
+   ========================================================================== */
+/* Global High Contrast Scrollbar Override */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--clr-neutral-50);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--clr-neutral-300);
+    border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--clr-neutral-400);
+}
+
+/* Dynamic Focus Visibility Accessibility Matrix */
+*:focus-visible {
+    outline: 3px solid var(--clr-primary);
+    outline-offset: 2px;
+}
+
+/* Text Selection Matrix */
+::selection {
+    background-color: var(--clr-primary-subtle);
+    color: var(--clr-primary);
+}
+
+/* Structurally Hidden Class Layer for Screen Readers Only */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Key Nav Anchor Element Link Pointer */
+.skip-link {
+    position: fixed;
+    top: -100px;
+    left: var(--space-4);
+    background: var(--clr-primary);
+    color: var(--clr-white);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    z-index: var(--z-tooltip);
+    transition: top var(--transition-fast);
+}
+
+.skip-link:focus-visible {
+    top: var(--space-4);
+}
+
+/* ==========================================================================
+   8. CORE FRAMEWORK ANIMATION ENGINE
+   ========================================================================== */
+.animate-fade { animation: fadeIn var(--transition-slow) ease-out forwards; }
+.animate-slide { animation: slideUp var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-shimmer {
+    background: linear-gradient(90deg, var(--clr-neutral-100) 25%, var(--clr-neutral-200) 50%, var(--clr-neutral-100) 75%);
+    background-size: 200% 100%;
+    animation: coreShimmer 1.5s infinite linear;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes coreShimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+/* ==========================================================================
+   9. PRINT-FRIENDLY RECOGNIZED STANDARDS OVERRIDES
+   ========================================================================== */
+@media print {
+    body {
+        background: var(--clr-white) !important;
+        color: var(--clr-black) !important;
+        font-size: 12pt;
+    }
+    .card, .card-glass {
+        border: 1px solid var(--clr-neutral-300) !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    .btn, .skip-link, ::-webkit-scrollbar {
+        display: none !important;
+    }
+}

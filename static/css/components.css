@@ -1,0 +1,266 @@
+/* ============================================================
+   PneumoAI — Buttons & Form Components
+   components.css
+   ============================================================ */
+
+/* ── Primary Button ── */
+.pai-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: var(--r-pill);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.pai-btn:active { transform: scale(0.97); }
+.pai-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary */
+.pai-btn--primary {
+  background: var(--pai-grad-brand);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(30, 80, 180, 0.25);
+}
+.pai-btn--primary:hover {
+  opacity: 0.88;
+  box-shadow: 0 6px 24px rgba(30, 80, 180, 0.35);
+}
+
+/* Ghost */
+.pai-btn--ghost {
+  background: transparent;
+  color: var(--pai-text-secondary);
+  border: 0.5px solid var(--pai-border);
+}
+.pai-btn--ghost:hover {
+  color: var(--pai-text-primary);
+  border-color: var(--pai-border-hover);
+  background: var(--pai-surface);
+}
+
+/* Teal outline */
+.pai-btn--teal {
+  background: var(--pai-teal-dim);
+  color: var(--pai-teal);
+  border: 0.5px solid var(--pai-teal-border);
+}
+.pai-btn--teal:hover {
+  background: rgba(79, 232, 192, 0.22);
+}
+
+/* Danger */
+.pai-btn--danger {
+  background: var(--pai-red-dim);
+  color: var(--pai-red);
+  border: 0.5px solid rgba(240, 96, 96, 0.25);
+}
+.pai-btn--danger:hover {
+  background: rgba(240, 96, 96, 0.2);
+}
+
+/* Sizes */
+.pai-btn--sm { padding: 6px 14px; font-size: 11px; }
+.pai-btn--lg { padding: 13px 30px; font-size: 14px; }
+
+/* Icon only */
+.pai-btn--icon {
+  width: 34px; height: 34px;
+  padding: 0;
+  border-radius: var(--r-sm);
+}
+
+/* ── Badge ── */
+.pai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pai-badge--teal {
+  background: var(--pai-teal-dim);
+  color: var(--pai-teal);
+  border: 0.5px solid var(--pai-teal-border);
+}
+
+.pai-badge--blue {
+  background: var(--pai-blue-dim);
+  color: var(--pai-blue);
+  border: 0.5px solid var(--pai-blue-border);
+}
+
+.pai-badge--amber {
+  background: var(--pai-amber-dim);
+  color: var(--pai-amber);
+  border: 0.5px solid var(--pai-amber-border);
+}
+
+.pai-badge--red {
+  background: var(--pai-red-dim);
+  color: var(--pai-red);
+  border: 0.5px solid rgba(240, 96, 96, 0.25);
+}
+
+/* ── Card ── */
+.pai-card {
+  background: var(--pai-surface);
+  border: 0.5px solid var(--pai-border);
+  border-radius: var(--r-lg);
+  padding: var(--pad-card);
+  transition: border-color var(--dur-fast), background var(--dur-fast);
+}
+
+.pai-card:hover {
+  border-color: var(--pai-border-hover);
+  background: var(--pai-surface-hover);
+}
+
+.pai-card--accent {
+  background: var(--pai-surface-accent);
+  border-color: rgba(126, 184, 255, 0.18);
+}
+
+.pai-card--glow {
+  box-shadow: 0 0 30px rgba(30, 80, 180, 0.12);
+}
+
+/* ── Progress Bar ── */
+.pai-progress {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  position: relative;
+}
+
+.pai-progress-fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--pai-grad-bar);
+  transition: width 0.8s var(--ease-out);
+}
+
+.pai-progress-fill--warn {
+  background: var(--pai-grad-warn);
+}
+
+.pai-progress-fill--teal {
+  background: linear-gradient(90deg, #0d9e78, #4fe8c0);
+}
+
+/* ── Toast Notification ── */
+.pai-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  padding: 12px 18px;
+  border-radius: var(--r-md);
+  background: rgba(20, 28, 50, 0.95);
+  border: 0.5px solid var(--pai-border);
+  backdrop-filter: blur(12px);
+  font-size: 13px;
+  color: var(--pai-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: pai-fade-up 0.3s var(--ease-out) both;
+  max-width: 320px;
+}
+
+.pai-toast--success { border-color: var(--pai-teal-border); }
+.pai-toast--error   { border-color: rgba(240, 96, 96, 0.3); }
+.pai-toast--warning { border-color: var(--pai-amber-border); }
+
+.pai-toast-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pai-toast--success .pai-toast-dot { background: var(--pai-teal); }
+.pai-toast--error   .pai-toast-dot { background: var(--pai-red); }
+.pai-toast--warning .pai-toast-dot { background: var(--pai-amber); }
+
+/* ── Spinner ── */
+.pai-spinner {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(126, 184, 255, 0.15);
+  border-top-color: var(--pai-blue);
+  animation: pai-spin 0.8s linear infinite;
+}
+
+.pai-spinner--sm { width: 18px; height: 18px; border-width: 1.5px; }
+.pai-spinner--teal { border-top-color: var(--pai-teal); }
+
+@keyframes pai-spin { to { transform: rotate(360deg); } }
+
+/* ── Divider with label ── */
+.pai-divider-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--pai-text-muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 20px 0;
+}
+
+.pai-divider-label::before,
+.pai-divider-label::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--pai-border);
+}
+
+/* ── Tooltip ── */
+.pai-tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.pai-tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(14, 21, 40, 0.95);
+  border: 0.5px solid var(--pai-border);
+  color: var(--pai-text-primary);
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+}
+
+.pai-tooltip:hover::after { opacity: 1; }

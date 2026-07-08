@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+{% block title %}Profile — PneumoAI{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+  <!-- ================= HEADER ================= -->
+  <div class="profile-header fade-up">
+
+    <div>
+      <div class="profile-title">
+        <i class="fas fa-user-circle"></i>
+        My Profile
+      </div>
+      <div class="profile-subtitle">
+        Manage your account information and personal settings.
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button id="refreshProfileBtn" class="btn btn-ghost">
+        <i class="fas fa-rotate-right"></i>
+        Refresh
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- ================= GRID ================= -->
+  <div class="profile-grid">
+
+    <!-- ========== LEFT SIDEBAR ========== -->
+    <div class="profile-sidebar glass fade-up">
+
+      <div class="avatar-wrapper">
+        <div class="avatar-ring">
+          <div id="profileAvatar" style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#4f8ef7,#7c5cbf);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:#fff;">DR</div>
+        </div>
+      </div>
+
+      <h3 id="profileName">Loading...</h3>
+      <p id="profileRole">User</p>
+
+      <div class="profile-status">
+        <span class="status-dot"></span>
+        <span>Active Account</span>
+      </div>
+
+      <div class="member-card">
+        <span class="label">Member Since</span>
+        <span class="value" id="memberSince">--</span>
+      </div>
+
+    </div>
+
+
+    <!-- ========== RIGHT MAIN ========== -->
+    <div class="profile-main glass fade-up">
+
+      <!-- ================= FORM ================= -->
+      <div class="card-header">
+        <div>
+          <h2>Personal Information</h2>
+          <p>Keep your profile information up to date.</p>
+        </div>
+      </div>
+
+      <form id="profileForm">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter full name">
+          </div>
+
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="text" id="mobile">
+          </div>
+
+          <div class="form-group">
+            <label>Role</label>
+            <input type="text" id="role" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Account Status</label>
+            <input type="text" id="accountStatus" readonly>
+          </div>
+
+        </div>
+
+        <div class="profile-footer">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-floppy-disk"></i>
+            Save Changes
+          </button>
+          <button type="reset" class="btn btn-ghost">
+            <i class="fas fa-xmark"></i>
+            Cancel
+          </button>
+        </div>
+
+      </form>
+
+
+      <!-- ================= SECURITY ================= -->
+      <div class="profile-card">
+
+        <div class="card-header">
+          <h2><i class="fas fa-shield-halved"></i> Security</h2>
+          <p>Manage your account security and password.</p>
+        </div>
+
+        <div class="security-grid">
+
+          <div class="security-item">
+            <div class="security-label"><i class="fas fa-clock"></i> Last Login</div>
+            <div class="security-value" id="lastLogin">--</div>
+          </div>
+
+          <div class="security-item">
+            <div class="security-label"><i class="fas fa-envelope-circle-check"></i> Email Verification</div>
+            <div class="security-value verified">Verified</div>
+          </div>
+
+          <div class="security-item">
+            <div class="security-label"><i class="fas fa-lock"></i> Password</div>
+            <div class="security-value">••••••••••••</div>
+          </div>
+
+        </div>
+
+        <div class="security-actions">
+          <button id="changePasswordBtn" class="btn btn-primary">
+            <i class="fas fa-key"></i> Change Password
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- ================= ACCOUNT INFO ================= -->
+      <div class="profile-card">
+
+        <div class="card-header">
+          <h2><i class="fas fa-circle-info"></i> Account Information</h2>
+          <p>Read-only account information.</p>
+        </div>
+
+        <div class="account-grid">
+
+          <div class="account-item">
+            <span class="account-label">User ID</span>
+            <span class="account-value" id="userId">--</span>
+          </div>
+
+          <div class="account-item">
+            <span class="account-label">Username</span>
+            <span class="account-value" id="usernameInfo">--</span>
+          </div>
+
+          <div class="account-item">
+            <span class="account-label">Role</span>
+            <span class="account-value" id="roleInfo">--</span>
+          </div>
+
+          <div class="account-item">
+            <span class="account-label">Created On</span>
+            <span class="account-value" id="createdOn">--</span>
+          </div>
+
+          <div class="account-item">
+            <span class="account-label">Updated On</span>
+            <span class="account-value" id="updatedOn">--</span>
+          </div>
+
+          <div class="account-item">
+            <span class="account-label">Status</span>
+            <span class="account-value">Active</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= PASSWORD MODAL ================= -->
+      <div class="modal-overlay" id="passwordModal">
+
+        <div class="modal-card">
+
+          <div class="modal-header">
+            <h3>Change Password</h3>
+            <button type="button" id="closePasswordModal" class="modal-close">
+              <i class="fas fa-xmark"></i>
+            </button>
+          </div>
+
+          <form id="passwordForm">
+
+            <div class="form-group" style="margin-top:16px;">
+              <label>Current Password</label>
+              <input type="password" id="oldPassword" required>
+            </div>
+
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="newPassword" required>
+            </div>
+
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" id="confirmPassword" required>
+            </div>
+
+            <div class="modal-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-key"></i> Update Password
+              </button>
+              <button type="button" id="cancelPasswordBtn" class="btn btn-ghost">
+                Cancel
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= STATS ================= -->
+      <div class="profile-card">
+        <div class="card-header">
+          <h2><i class="fas fa-chart-line"></i> AI Prediction Statistics</h2>
+        </div>
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <div class="stat-value" id="totalScans">0</div>
+            <div class="stat-label">Total Scans</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-value" id="normalCases">0</div>
+            <div class="stat-label">Normal</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-value" id="pneumoniaCases">0</div>
+            <div class="stat-label">Pneumonia</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-value" id="averageConfidence">0%</div>
+            <div class="stat-label">Avg Confidence</div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================= RECENT ACTIVITY ================= -->
+      <div class="profile-card">
+        <div class="card-header">
+          <h2><i class="fas fa-clock-rotate-left"></i> Recent Activity</h2>
+        </div>
+
+        <div class="activity-timeline">
+
+          <div class="activity-item">
+            <div class="activity-title">Logged In</div>
+            <div class="activity-time" id="loginActivity">--</div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-title">Latest Prediction</div>
+            <div class="activity-time" id="predictionActivity">--</div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-title">Profile Updated</div>
+            <div class="activity-time" id="profileActivity">--</div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================= QUICK ACTIONS ================= -->
+      <div class="profile-card">
+
+        <div class="card-header">
+          <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+        </div>
+
+        <div class="quick-actions">
+          <button class="btn btn-ghost btn-sm" onclick="location.href='/upload'">
+            <i class="fas fa-upload"></i> New Scan
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="location.href='/history'">
+            <i class="fas fa-clock-rotate-left"></i> History
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="location.href='/dashboard'">
+            <i class="fas fa-gauge-high"></i> Dashboard
+          </button>
+        </div>
+
+      </div>
+
+
+    </div> <!-- profile-main -->
+
+  </div> <!-- profile-grid -->
+
+</div> <!-- profile-page -->
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
